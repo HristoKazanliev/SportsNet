@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportsNet.Web", "SportsNet.Web\SportsNet.Web.csproj", "{33FDF7D7-5326-4702-8372-CA7E24C55F31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33FDF7D7-5326-4702-8372-CA7E24C55F31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33FDF7D7-5326-4702-8372-CA7E24C55F31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33FDF7D7-5326-4702-8372-CA7E24C55F31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33FDF7D7-5326-4702-8372-CA7E24C55F31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D492DEF0-B862-444A-8A2D-EEFC26F2EA34}
+	EndGlobalSection
+EndGlobal
