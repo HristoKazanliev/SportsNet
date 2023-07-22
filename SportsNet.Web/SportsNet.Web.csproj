@@ -15,4 +15,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
+    <ProjectReference Include="..\SportsNet.Data\SportsNet.Data.csproj" />
+    <ProjectReference Include="..\SportsNet.Web.ViewModels\SportsNet.Web.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

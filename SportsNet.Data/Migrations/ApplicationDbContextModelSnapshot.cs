@@ -5,7 +5,7 @@ namespace SportsNet.Web.Data.Migrations
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-    using SportsNet.Web.Data;
+    using SportsNet.Data;
     using System;
 
     [DbContext(typeof(ApplicationDbContext))]

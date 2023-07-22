@@ -1,4 +1,4 @@
-namespace SportsNet.Web.Models
+namespace SportsNet.Web.ViewModels
 {
     public class ErrorViewModel
     {
