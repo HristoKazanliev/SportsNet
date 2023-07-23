@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
+  </ItemGroup>
+
 </Project>
