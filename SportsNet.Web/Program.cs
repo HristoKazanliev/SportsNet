@@ -4,6 +4,7 @@ namespace SportsNet.Web
     using Microsoft.EntityFrameworkCore;
 
     using SportsNet.Data;
+    using SportsNet.Data.Models;
 
     public class Program
     {
@@ -13,14 +14,15 @@ namespace SportsNet.Web
 
             // Add services to the container.
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            builder.Services.AddDbContext<SportsNetDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = true;
             }) 
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<SportsNetDbContext>();
+
             builder.Services.AddControllersWithViews();
 
             WebApplication app = builder.Build();
