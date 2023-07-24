@@ -5,10 +5,10 @@
         public static class Category
         {
             public const int NameMinLength = 3;
-            public const int NameMaxLength = 30;
+            public const int NameMaxLength = 20;
 
-            public const int DescriptionMinLength = 5;
-            public const int DescriptionMaxLength = 30;
+            public const int DescriptionMinLength = 10;
+            public const int DescriptionMaxLength = 100;
 
             public const int ImageUrlMaxLength = 2048;
         }
