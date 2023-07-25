@@ -7,10 +7,11 @@
 
     using static SportsNet.Common.EntityValidationConstants.Post;
 
-    public class Post : BaseDeletableModel<int>
+    public class Post : BaseDeletableModel<Guid>
     {
         public Post()
         {
+            this.Id = Guid.NewGuid();
             this.Comments = new HashSet<Comment>();
             this.Votes = new HashSet<Vote>();
         }

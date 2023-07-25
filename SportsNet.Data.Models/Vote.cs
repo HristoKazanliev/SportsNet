@@ -14,7 +14,7 @@
 
         public virtual ApplicationUser Author { get; set; } = null!;
 
-        public int PostId { get; set; }
+        public Guid PostId { get; set; }
 
         public virtual Post Post { get; set; } = null!;
     }

@@ -7,6 +7,11 @@
 
     public class Category : BaseDeletableModel<int>
     {
+        public Category()
+        {
+            this.Posts = new HashSet<Post>();
+        }
+
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
@@ -18,5 +23,7 @@
         [Required]
         [MaxLength(ImageUrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
+
+        public ICollection<Post> Posts { get; set; }
     }
 }

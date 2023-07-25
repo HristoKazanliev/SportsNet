@@ -5,6 +5,9 @@
     using Microsoft.EntityFrameworkCore;
 
     using Models;
+    using SportsNet.Data.Common;
+    using System.Reflection;
+    using System.Reflection.Emit;
 
     public class SportsNetDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
@@ -25,7 +28,18 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // Applies configurations
+            Assembly configAssembly = Assembly.GetAssembly(typeof(SportsNetDbContext)) ??
+                                     Assembly.GetExecutingAssembly();
+            builder.ApplyConfigurationsFromAssembly(configAssembly);
+
             base.OnModelCreating(builder);
+
+            // Disable cascade delete
+            foreach (var foreignKey in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
 }

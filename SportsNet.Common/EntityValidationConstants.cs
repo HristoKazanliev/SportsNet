@@ -16,7 +16,7 @@
         public static class Post
         {
             public const int TitleMinLength = 2;
-            public const int TitleMaxLength = 25;
+            public const int TitleMaxLength = 80;
 
             public const int ContentMinLength = 10;
             public const int ContentMaxLength = 200;
