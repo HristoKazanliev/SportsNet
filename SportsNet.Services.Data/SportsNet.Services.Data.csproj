@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
+    <ProjectReference Include="..\SportsNet.Data.Common\SportsNet.Data.Common.csproj" />
+    <ProjectReference Include="..\SportsNet.Data.Models\SportsNet.Data.Models.csproj" />
+    <ProjectReference Include="..\SportsNet.Data\SportsNet.Data.csproj" />
+    <ProjectReference Include="..\SportsNet.Web.ViewModels\SportsNet.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
