@@ -5,6 +5,8 @@ namespace SportsNet.Web
 
     using SportsNet.Data;
     using SportsNet.Data.Models;
+    using SportsNet.Services.Data.Interfaces;
+    using SportsNet.Web.Infrastructure.Extensions;
 
     public class Program
     {
@@ -31,6 +33,8 @@ namespace SportsNet.Web
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             }) 
                 .AddEntityFrameworkStores<SportsNetDbContext>();
+
+            builder.Services.AddApplicationServices(typeof(IPostService));
 
             builder.Services.AddControllersWithViews();
 
