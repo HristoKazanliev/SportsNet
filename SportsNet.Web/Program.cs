@@ -5,6 +5,8 @@ namespace SportsNet.Web
 
     using SportsNet.Data;
     using SportsNet.Data.Models;
+    using SportsNet.Data.Repositories.Interfaces;
+    using SportsNet.Data.Repositories;
     using SportsNet.Services.Data.Interfaces;
     using SportsNet.Web.Infrastructure.Extensions;
 
@@ -34,6 +36,7 @@ namespace SportsNet.Web
             }) 
                 .AddEntityFrameworkStores<SportsNetDbContext>();
 
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddApplicationServices(typeof(IPostService));
 
             builder.Services.AddControllersWithViews();

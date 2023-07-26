@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
+    <ProjectReference Include="..\SportsNet.Data.Models\SportsNet.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

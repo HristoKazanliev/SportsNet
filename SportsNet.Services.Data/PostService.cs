@@ -2,14 +2,22 @@
 {
     using Interfaces;
     using SportsNet.Data;
+    using SportsNet.Data.Models.Enums;
+    using System.Collections.Generic;
 
     public class PostService : IPostService
     {
-        private readonly SportsNetDbContext dbContext;
 
-        public PostService(SportsNetDbContext dbContext)
+        public PostService()
         {
-            this.dbContext = dbContext;
+
         }
+
+        public IEnumerable<PostType> GetPostTypes() 
+            => Enum.GetValues(typeof(PostType))
+            .Cast<PostType>()
+            .ToList();
+
+        
     }
 }
