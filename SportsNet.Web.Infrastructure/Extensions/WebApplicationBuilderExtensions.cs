@@ -5,7 +5,7 @@
 
     public static class WebApplicationBuilderExtensions
     {
-        //Registers services by their interface
+        //Auto-Registers services with their interface and implementations of given assembly.
         public static void AddApplicationServices(this IServiceCollection services, Type serviceType)
         {
             Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
