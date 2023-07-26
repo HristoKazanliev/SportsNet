@@ -24,6 +24,6 @@
         [MaxLength(ImageUrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
-        public ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

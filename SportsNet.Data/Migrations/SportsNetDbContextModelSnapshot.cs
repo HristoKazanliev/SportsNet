@@ -306,7 +306,7 @@ namespace SportsNet.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -369,7 +369,7 @@ namespace SportsNet.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("SportsNet.Data.Models.Image", b =>
@@ -406,7 +406,7 @@ namespace SportsNet.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("SportsNet.Data.Models.Post", b =>
@@ -454,7 +454,7 @@ namespace SportsNet.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
 
                     b.HasData(
                         new
@@ -532,7 +532,7 @@ namespace SportsNet.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Votes");
+                    b.ToTable("Votes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

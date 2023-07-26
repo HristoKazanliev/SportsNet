@@ -6,7 +6,7 @@
 
         IQueryable<TEntity> AllAsNoTracking();
 
-        void AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);
 
         void Update(TEntity entity);
 
