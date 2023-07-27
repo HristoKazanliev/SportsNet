@@ -5,5 +5,9 @@
     public interface ICategoryService
     {
         Task<IEnumerable<PostSelectCategoryFormModel>> AllCategoriesAsync();
+
+        Task CreateAsync(CategoryFormModel formModel);
+
+        bool ExistsByNameAsync(string name);
     }
 }
