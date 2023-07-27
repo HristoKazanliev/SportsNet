@@ -6,6 +6,7 @@
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
+    using SportsNet.Services.Data.Models.Post;
     using SportsNet.Web.Infrastructure.Extensions;
     using SportsNet.Web.ViewModels.Post;
     using Category = Data.Models.Category;
@@ -25,9 +26,16 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        [HttpGet]
+        public async Task<IActionResult> All([FromQuery]AllPostsQueryModel queryModel)
         {
-            return Ok();
+            AllPostsQueryServiceModel serviceModel = await this.postService.AllAsync(queryModel);
+
+            queryModel.Posts = serviceModel.Posts;
+            queryModel.TotalPosts = serviceModel.TotalPostsCount;
+            queryModel.Categories = await this.categoryService.AllCategoryNamesAsync();
+
+            return this.View(queryModel);
         }
 
         [HttpGet]

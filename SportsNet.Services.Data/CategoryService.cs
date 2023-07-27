@@ -28,6 +28,16 @@
             })
             .ToArrayAsync();
 
+        public async Task<IEnumerable<string>> AllCategoryNamesAsync()
+        {
+            IEnumerable<string> allNames = await this.categoriesRepository
+                .All()
+                .Select(c => c.Name)
+                .ToArrayAsync();
+
+            return allNames;
+        }
+
         public async Task CreateAsync(CategoryFormModel formModel)
         {
             Category newCategory = new Category()

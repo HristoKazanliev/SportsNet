@@ -8,6 +8,8 @@
 
         Task CreateAsync(CategoryFormModel formModel);
 
+        Task<IEnumerable<string>> AllCategoryNamesAsync();
+
         bool ExistsByNameAsync(string name);
     }
 }

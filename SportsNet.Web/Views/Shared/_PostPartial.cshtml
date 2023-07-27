@@ -1,0 +1,22 @@
+﻿@model PostAllViewModel
+
+<tr>
+	<td>
+		<div class="d-flex align-items-center">
+			<div class="row">
+				<h6 class="font-weight-bold">@Model.Author.UserName</h6>
+			</div>
+		</div>
+	</td>
+	<td>@Model.Title</td>
+	<td>@Model.CommentsCount</td>
+	<td>
+		<button disabled class="btn btn-outline-info font-weight-bold">@Model.Type</button>
+	</td>
+	<td scope="col">@Model.CreatedOn.ToString("dd/MM/yyyy HH:mm")</td>
+	<td>
+		<div>
+			<a asp-controller="Posts" asp-action="Details" asp-route-postId="@Model.Id" class="btn btn-info text-uppercase">Read More</a>
+		</div>
+	</td>
+</tr>
