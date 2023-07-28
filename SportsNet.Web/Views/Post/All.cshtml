@@ -79,9 +79,9 @@
 			</thead>
 			<tbody>
 
-				@foreach (var house in Model.Posts)
+				@foreach (var post in Model.Posts)
 				{
-					<partial name="_PostPartial" model="@house" />
+					<partial name="_PostPartial" model="@post" />
 				}
 			</tbody>
 		</table>

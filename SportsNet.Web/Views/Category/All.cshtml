@@ -9,7 +9,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 text-center">
-			<h3 class="fw-bold text-black" style="font-family: 'Times New Roman', Times, serif"><u>Choose your forum!</u></h3>
+			<h3 class="fw-bold text-black text-decoration-underline" style="font-family: 'Times New Roman', Times, serif">Choose your forum!</h3>
 		</div>
 	</div>
 	<div class="row">
@@ -24,7 +24,7 @@
 						<div class="row mt-3">
 							<p class="card-text fw-bold">Posts in this category: @category.PostsCount</p>
 							<div class="card-text">
-								<a asp-controller="Categories" asp-action="Specify" asp-route-categoryId="@category.Id"
+								<a asp-controller="Category" asp-action="Details" asp-route-id="@category.Id"
 								   class="btn btn-primary text-light">Proceed to Forum</a>
 							</div>
 						</div>

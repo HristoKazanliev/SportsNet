@@ -66,5 +66,28 @@
                 return View(model);
             }
         }
-    }
+
+		[HttpGet]
+		[AllowAnonymous]
+		public async Task<IActionResult> Details(int id)
+		{
+            bool categoryExists = this.categoryService.ExistsByIdAsync(id);
+            if (!categoryExists) 
+            {
+				return RedirectToAction("All", "House");
+			}
+
+            try
+            {
+                AllCategoriesQueryModel viewModel = await this.categoryService.GetDetailsByIdAsync(id);
+
+				return View(viewModel);
+			}
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
+		}
+	}
 }

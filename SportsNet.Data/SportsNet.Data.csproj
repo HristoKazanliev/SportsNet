@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
     <ProjectReference Include="..\SportsNet.Data.Models\SportsNet.Data.Models.csproj" />
+    <ProjectReference Include="..\SportsNet.Services.Mapping\SportsNet.Services.Mapping.csproj" />
   </ItemGroup>
 
   <ItemGroup>

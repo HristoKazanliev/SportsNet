@@ -1,6 +1,8 @@
 namespace SportsNet.Web
 {
-    using Microsoft.AspNetCore.Identity;
+	using System.Reflection;
+
+	using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using SportsNet.Data;
@@ -9,8 +11,10 @@ namespace SportsNet.Web
     using SportsNet.Data.Repositories;
     using SportsNet.Services.Data.Interfaces;
     using SportsNet.Web.Infrastructure.Extensions;
+	using SportsNet.Web.ViewModels;
+	using SportsNet.Services.Mapping;
 
-    public class Program
+	public class Program
     {
         public static void Main(string[] args)
         {
@@ -43,7 +47,9 @@ namespace SportsNet.Web
 
             WebApplication app = builder.Build();
 
-            if (app.Environment.IsDevelopment())
+			AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
+			if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
                 app.UseDeveloperExceptionPage();

@@ -1,6 +1,9 @@
 ﻿namespace SportsNet.Web.ViewModels.Category
 {
-	public class CategoryAllViewModel
+	using SportsNet.Data.Models;
+	using SportsNet.Services.Mapping;
+
+	public class CategoryAllViewModel : IMapFrom<Category>
 	{
         public int Id { get; set; }
 

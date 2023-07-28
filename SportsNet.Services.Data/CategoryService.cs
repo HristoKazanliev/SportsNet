@@ -70,8 +70,32 @@
 
             return categories;
 		}
+		
+		public async Task<AllCategoriesQueryModel> GetDetailsByIdAsync(int categoryId)
+		{
+			Category category = await this.categoriesRepository
+                .All()
+                .Where(c => c.Id == categoryId)
+                .FirstAsync();
+
+            var posts = postsRepository.All().Where(p => p.CategoryId == category.Id);
+
+            return new AllCategoriesQueryModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ImageUrl = category.ImageUrl,
+				PostsCount = postsRepository.All().Where(p => p.CategoryId == category.Id).Count(),
+			};
+		}
+
+
 
 		public bool ExistsByNameAsync(string name)
 			=> this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
+
+		public bool ExistsByIdAsync(int id)
+		    => this.categoriesRepository.All().Any(c => c.Id == id);
 	}
 }

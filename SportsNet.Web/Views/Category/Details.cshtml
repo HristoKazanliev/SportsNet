@@ -1,0 +1,66 @@
+﻿@model AllCategoriesQueryModel
+@{
+    ViewBag.Title = $"{Model.Name} Forum"; 
+}
+
+<div class="container p-3">
+	<div class="row">
+		<table class="table table-hover " style="background-color: ghostwhite">
+			<thead class="th">
+				<tr>
+					<th width="12%" scope="col">Author</th>
+					<th width="40%" scope="col">Topic Title</th>
+					<th scope="col">Comments</th>
+					<th width="10%">Type</th>
+					<th width="10%" scope="col">Created on</th>
+					<th width="15%">Details</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (var house in Model.Posts)
+				{
+					<partial name="_PostPartial" model="@house" />
+				}
+			</tbody>
+		</table>
+
+		@if (!Model.Posts.Any())
+		{
+			<h2 class="text-center pb-md-5">No posts found by the given criteria!</h2>
+		}
+
+		@{
+			int previousPage = Model.CurrentPage - 1;
+			if (previousPage < 1)
+			{
+				previousPage = 1;
+			}
+
+			int maxPage = (int)Math.Ceiling((double)Model.TotalPosts /
+			Model.PostsPerPage);
+		}
+
+		<div class="row mb-5">
+			<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
+				<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+				   asp-controller="Post"
+				   asp-action="All"
+				   asp-route-currentPage="@previousPage"><<</a>
+			</div>
+
+			@{
+				bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
+				!Model.Posts.Any();
+			}
+
+			<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
+				<a class="btn btn-primary
+           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+				   asp-controller="Post"
+				   asp-action="All"
+				   asp-route-currentPage="@(Model.CurrentPage + 1)"></a>
+			</div>
+		</div>
+	</div>
+</div>

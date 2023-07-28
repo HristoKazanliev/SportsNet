@@ -12,6 +12,7 @@
     <ProjectReference Include="..\SportsNet.Data.Models\SportsNet.Data.Models.csproj" />
     <ProjectReference Include="..\SportsNet.Data\SportsNet.Data.csproj" />
     <ProjectReference Include="..\SportsNet.Services.Data.Models\SportsNet.Services.Data.Models.csproj" />
+    <ProjectReference Include="..\SportsNet.Services.Mapping\SportsNet.Services.Mapping.csproj" />
     <ProjectReference Include="..\SportsNet.Web.ViewModels\SportsNet.Web.ViewModels.csproj" />
   </ItemGroup>
 

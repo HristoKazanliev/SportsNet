@@ -13,6 +13,10 @@
 
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
-        bool ExistsByNameAsync(string name);
-    }
+        Task<AllCategoriesQueryModel> GetDetailsByIdAsync(int categoryId);
+
+		bool ExistsByNameAsync(string name);
+
+		bool ExistsByIdAsync(int id);
+	}
 }
