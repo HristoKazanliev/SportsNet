@@ -6,16 +6,19 @@
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
     using SportsNet.Web.ViewModels.Categories;
-    using SportsNet.Web.ViewModels.Post;
+	using SportsNet.Web.ViewModels.Category;
+	using SportsNet.Web.ViewModels.Post;
     using System.Threading;
 
     public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category> categoriesRepository;
+        private readonly IRepository<Post> postsRepository;
 
-        public CategoryService(IRepository<Category> categoriesRepository)
+        public CategoryService(IRepository<Category> categoriesRepository, IRepository<Post> postsRepository)
         {
             this.categoriesRepository = categoriesRepository;
+            this.postsRepository = postsRepository;
         }
 
         public async Task<IEnumerable<PostSelectCategoryFormModel>> AllCategoriesAsync() 
@@ -51,8 +54,24 @@
             await this.categoriesRepository.SaveChangesAsync();
         }
 
-        public bool ExistsByNameAsync(string name) 
-            => this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
-        
-    }
+		public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()
+		{
+			IEnumerable<CategoryAllViewModel> categories = await this.categoriesRepository
+                .All()
+                .Select(c => new CategoryAllViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    ImageUrl = c.ImageUrl,
+                    PostsCount = postsRepository.All().Where(p => p.CategoryId == c.Id).Count()
+                })
+                .ToArrayAsync();
+
+            return categories;
+		}
+
+		public bool ExistsByNameAsync(string name)
+			=> this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
+	}
 }

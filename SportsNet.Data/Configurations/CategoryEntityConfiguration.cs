@@ -34,10 +34,10 @@
             category = new Category()
             {
                 Id = 2,
-                Name = "Tennis",
-                Description = "Tennis Live Scores, News, Videos, Player Rankings",
-                ImageUrl = "https://s.yimg.com/uu/api/res/1.2/c8QVJhoxt_hJhBExOhzFlg--~B/Zmk9ZmlsbDtoPTUwNTtweW9mZj0wO3E9OTU7dz05MDA7YXBwaWQ9eXRhY2h5b24-/https://s.yimg.com/os/creatr-uploaded-images/2023-07/89df8d30-2410-11ee-bddf-4f5a96592784"
-            };
+                Name = "Volleyball ",
+                Description = "Stay current on the Tournaments, leagues, teams and players news, scores, stats, standings",
+                ImageUrl = "https://epaimages.com/downloadpicturepreview.pp?pictureid=11615719"
+			};
             categories.Add(category);
 
             category = new Category()

@@ -4,8 +4,9 @@
     using Microsoft.AspNetCore.Mvc;
     using SportsNet.Services.Data.Interfaces;
     using SportsNet.Web.ViewModels.Categories;
+	using SportsNet.Web.ViewModels.Category;
 
-    [Authorize]
+	[Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;
@@ -17,9 +18,11 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult All()
+        public async Task<IActionResult> All()
         {
-            return View();
+            IEnumerable<CategoryAllViewModel> categories = await this.categoryService.GetCategories();
+
+            return View(categories);
         }
 
         [HttpGet]
@@ -43,7 +46,7 @@
             bool categoryExists = categoryService.ExistsByNameAsync(model.Name.ToLower());
             if (categoryExists)
             {
-                ModelState.AddModelError(nameof(model.Name), "Selected category already exist!");
+                ModelState.AddModelError(nameof(model.Name), "Selected category already exists!");
             }
 
             if (!this.ModelState.IsValid)

@@ -1,4 +1,4 @@
-﻿namespace SportsNet.Web.ViewModels.Categories
+﻿namespace SportsNet.Web.ViewModels.Category
 {
     using System.ComponentModel.DataAnnotations;
 
