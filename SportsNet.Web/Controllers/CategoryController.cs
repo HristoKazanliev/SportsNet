@@ -2,16 +2,22 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SportsNet.Services.Data.Interfaces;
-    using SportsNet.Web.ViewModels.Categories;
+	using SportsNet.Data.Models;
+	using SportsNet.Data.Repositories.Interfaces;
+	using SportsNet.Services.Data.Interfaces;
+	using SportsNet.Services.Data.Models.Category;
+	using SportsNet.Services.Data.Models.Post;
+	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
+	using SportsNet.Web.ViewModels.Post;
+	using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 	[Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+		public CategoryController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
         }
@@ -69,7 +75,7 @@
 
 		[HttpGet]
 		[AllowAnonymous]
-		public async Task<IActionResult> Details(int id)
+		public ActionResult Details([FromQuery] AllCategoriesQueryServiceModel queryModel, int id)
 		{
             bool categoryExists = this.categoryService.ExistsByIdAsync(id);
             if (!categoryExists) 
@@ -77,11 +83,15 @@
 				return RedirectToAction("All", "House");
 			}
 
-            try
+			try
             {
-                AllCategoriesQueryModel viewModel = await this.categoryService.GetDetailsByIdAsync(id);
+                var queryResult = this.categoryService.GetDetailsByIdAsync(id, queryModel.CurrentPage, queryModel.PostsPerPage);
 
-				return View(viewModel);
+				queryModel.Category = queryResult.Category;
+				queryModel.TotalPosts = queryResult.TotalPosts;
+				queryModel.Posts = queryResult.Posts;
+
+				return View(queryModel);
 			}
             catch (Exception)
             {

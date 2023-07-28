@@ -1,10 +1,10 @@
 ﻿namespace SportsNet.Web.ViewModels.Post
 {
     using SportsNet.Data.Models;
-    using System.ComponentModel.DataAnnotations;
-    using System.Xml.Linq;
+	using SportsNet.Services.Mapping;
+	using System.ComponentModel.DataAnnotations;
 
-    public class PostAllViewModel
+    public class PostAllViewModel : IMapFrom<Post>
     {
         public string Id { get; set; } = null!;
 

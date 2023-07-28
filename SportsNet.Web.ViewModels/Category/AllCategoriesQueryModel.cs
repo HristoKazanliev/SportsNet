@@ -1,17 +1,19 @@
 ﻿namespace SportsNet.Web.ViewModels.Category
 {
-    using System.ComponentModel.DataAnnotations;
+	using SportsNet.Web.ViewModels.Post;
+	using System.ComponentModel.DataAnnotations;
 
     using static Common.GeneralApplicationConstants;
 
-    public class AllCategoriesQueryModel : CategoryAllViewModel
+    public class AllCategoriesQueryModel
     {
         public AllCategoriesQueryModel()
         {
             this.CurrentPage = DefaultPage;
             this.PostsPerPage = EntitiesPerPage;
 
-            this.Posts = new HashSet<string>();
+            this.Category = new CategoryAllViewModel();
+			this.Posts = new HashSet<PostAllViewModel>();
 		}
 
         public int CurrentPage { get; set; }
@@ -21,6 +23,8 @@
 
         public int TotalPosts { get; set; }
 
-        public IEnumerable<string> Posts { get; set; }
+        public CategoryAllViewModel Category { get; set; }
+
+        public IEnumerable<PostAllViewModel> Posts { get; set; }
     }
 }

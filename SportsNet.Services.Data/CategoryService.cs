@@ -5,7 +5,10 @@
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
-    using SportsNet.Web.ViewModels.Categories;
+	using SportsNet.Services.Data.Models.Category;
+	using SportsNet.Services.Data.Models.Post;
+	using SportsNet.Services.Mapping;
+	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
     using System.Threading;
@@ -71,31 +74,43 @@
             return categories;
 		}
 		
-		public async Task<AllCategoriesQueryModel> GetDetailsByIdAsync(int categoryId)
+		public AllCategoriesQueryServiceModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue)
 		{
-			Category category = await this.categoriesRepository
-                .All()
-                .Where(c => c.Id == categoryId)
-                .FirstAsync();
+			IQueryable<Post> postQuery = this.postsRepository.All().Where(p => p.CategoryId == categoryId);
 
-            var posts = postsRepository.All().Where(p => p.CategoryId == category.Id);
+            int totalPosts = postQuery.ToList().Count;
 
-            return new AllCategoriesQueryModel
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ImageUrl = category.ImageUrl,
-				PostsCount = postsRepository.All().Where(p => p.CategoryId == category.Id).Count(),
+			CategoryAllViewModel category = this.GetCategory(categoryId);
+
+			var posts = this.GetPosts(postQuery);
+			
+			return new AllCategoriesQueryServiceModel
+			{
+				TotalPosts = totalPosts,
+				CurrentPage = currentPage,
+				PostsPerPage = postsPerPage,
+				Category = category,
+				Posts = posts
 			};
 		}
-
-
 
 		public bool ExistsByNameAsync(string name)
 			=> this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
 
 		public bool ExistsByIdAsync(int id)
 		    => this.categoriesRepository.All().Any(c => c.Id == id);
+
+
+        private CategoryAllViewModel GetCategory(int categoryId)
+            => this.categoriesRepository
+            .All()
+            .Where(c => c.Id == categoryId)
+            .To<CategoryAllViewModel>()
+            .FirstOrDefault()!;
+
+		private IEnumerable<PostAllViewModel> GetPosts(IQueryable<Post> postQuery)
+		  => postQuery
+			  .To<PostAllViewModel>()
+			  .ToList();
 	}
 }

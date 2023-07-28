@@ -1,66 +1,91 @@
-﻿@model AllCategoriesQueryModel
+﻿@model AllCategoriesQueryServiceModel
 @{
-    ViewBag.Title = $"{Model.Name} Forum"; 
+	ViewBag.Title = $"{Model.Category.Name} Forum";
 }
+
+<div class="row">
+	<div class="col-3">
+		<img class="border img-fluid" src="@Model.Category.ImageUrl" alt="Image" />
+	</div>
+	<div class="col-7">
+		<h3>@Model.Category.Name</h3>
+		<h4>@Model.Category.Description</h4>
+	</div>
+	<div class="row text-center">
+		<div class="text-md-center">
+			<a asp-controller="Post" asp-action="Add"
+			   class="btn btn-primary fw-bold mb-3 mt-3 text-md-center"> Add new Post </a>
+			<div class="row">
+				<div class="fw-bold text-md-center">
+					@if (!User.Identity?.IsAuthenticated ?? false)
+					{
+						<p>You have to <a href="/Identity/Account/Login">Log in</a> to post in the Forum!</p>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="container p-3">
 	<div class="row">
-		<table class="table table-hover " style="background-color: ghostwhite">
-			<thead class="th">
-				<tr>
-					<th width="12%" scope="col">Author</th>
-					<th width="40%" scope="col">Topic Title</th>
-					<th scope="col">Comments</th>
-					<th width="10%">Type</th>
-					<th width="10%" scope="col">Created on</th>
-					<th width="15%">Details</th>
-				</tr>
-			</thead>
-			<tbody>
-
-				@foreach (var house in Model.Posts)
-				{
-					<partial name="_PostPartial" model="@house" />
-				}
-			</tbody>
-		</table>
-
 		@if (!Model.Posts.Any())
 		{
-			<h2 class="text-center pb-md-5">No posts found by the given criteria!</h2>
+			<div class="container">
+				<h1 class="text-center">No topics in this category yet!</h1>
+				<hr class="my-4">
+				<p class="lead text-center">Be the first person to create one by clicking on the "Add new Post" button!</p>
+			</div>
 		}
+		else
+		{
+			<table class="table table-hover" style="background-color: ghostwhite">
+				<thead class="th">
+					<tr>
+						<th width="12%" scope="col">Author</th>
+						<th width="40%" scope="col">Topic Title</th>
+						<th scope="col">Comments</th>
+						<th width="10%">Type</th>
+						<th width="10%" scope="col">Created on</th>
+						<th width="15%">Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var post in Model.Posts)
+					{
+						<partial name="_PostPartial" model="@post" />
+					}
+				</tbody>
+			</table>
 
-		@{
+
 			int previousPage = Model.CurrentPage - 1;
 			if (previousPage < 1)
 			{
 				previousPage = 1;
 			}
 
-			int maxPage = (int)Math.Ceiling((double)Model.TotalPosts /
-			Model.PostsPerPage);
+			int maxPage = (int)Math.Ceiling((double)Model.TotalPosts / Model.PostsPerPage);
+
+			<div class="row mb-3">
+				<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
+					<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+					   asp-controller="Post"
+					   asp-action="All"
+					   asp-route-currentPage="@previousPage">&ltPrevious</a>
+				</div>
+
+				@{
+					bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage || !Model.Posts.Any();
+				}
+
+				<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
+					<a class="btn btn-primary @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
+					   asp-controller="Post"
+					   asp-action="All"
+					   asp-route-currentPage="@(Model.CurrentPage + 1)">Next&gt</a>
+				</div>
+			</div>
 		}
-
-		<div class="row mb-5">
-			<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
-				<a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-				   asp-controller="Post"
-				   asp-action="All"
-				   asp-route-currentPage="@previousPage"><<</a>
-			</div>
-
-			@{
-				bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
-				!Model.Posts.Any();
-			}
-
-			<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
-				<a class="btn btn-primary
-           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
-				   asp-controller="Post"
-				   asp-action="All"
-				   asp-route-currentPage="@(Model.CurrentPage + 1)"></a>
-			</div>
-		</div>
 	</div>
 </div>
