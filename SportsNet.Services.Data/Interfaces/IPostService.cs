@@ -14,5 +14,7 @@
         Task<AllPostsQueryServiceModel> AllAsync(AllPostsQueryModel queryModel);
 
 		Task<bool> ExistsByIdAsync(string postId);
+
+		TModel GetPost<TModel>(string postId);
 	}
 }

@@ -97,5 +97,29 @@
         {
             return Ok();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool postExists = await this.postService
+                .ExistsByIdAsync(id);
+            if (!postExists) 
+            {
+				return RedirectToAction("All", "Post");
+			}
+
+            try
+            {
+                PostDetailsViewModel post = this.postService.GetPost<PostDetailsViewModel>(id);
+
+                return View(post);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 	}
 }

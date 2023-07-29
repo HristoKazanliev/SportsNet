@@ -72,14 +72,14 @@
             }
         }
 
-		[HttpGet]
+		[HttpGet()]
 		[AllowAnonymous]
 		public ActionResult Details([FromQuery] AllCategoriesQueryModel queryModel, int id)
 		{
             bool categoryExists = this.categoryService.ExistsByIdAsync(id);
             if (!categoryExists) 
             {
-				return RedirectToAction("All", "House");
+				return RedirectToAction("All", "Category");
 			}
 
 			try

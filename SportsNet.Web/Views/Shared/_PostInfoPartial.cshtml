@@ -1,0 +1,37 @@
+﻿@model PostDetailsViewModel
+
+<article>
+	<div class="card-header">
+		<div class="row">
+			<h3 class="col-6 ">
+				<a asp-controller="Category" asp-action="Details" asp-route-id=" @Model.CategoryId">@Model.Category.Name</a>
+			</h3>
+			<div style="color: #20247b" class="fw-bold text-end col-6">
+				Upvotes :
+				<h4 id="votesCount" style="color: #20247b" class="fw-bold">@Model.VotesCount</h4>
+			</div>
+		</div>
+		<div>
+			<h4><strong>Author:</strong> @Model.Author.UserName</h4>
+			<p><strong>Created On:</strong> @Model.CreatedOn.ToString("dd/MM/yyyy HH:mm")</p>
+		</div>
+	</div>
+	<hr />
+	<h2>@Model.Title</h2>
+	<div class="card-body">
+		<p class="fs-4">@Model.Content</p>
+		<a class="btn btn-primary disabled">@this.Model.Type</a>
+		<div class="float-end">
+			@if (User.Identity?.IsAuthenticated ?? false)
+			{
+				@if (Model.Author.UserName == this.User.Identity.Name)
+				{
+					<a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id"
+					   class="btn btn-info">Edit</a>
+					<a asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Id"
+					   class="btn btn-danger">Delete</a>
+				}
+			}
+		</div>
+	</div>
+</article>

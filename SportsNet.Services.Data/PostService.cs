@@ -7,6 +7,7 @@
 	using SportsNet.Data.Models.Enums;
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data.Models.Post;
+	using SportsNet.Services.Mapping;
 	using SportsNet.Web.ViewModels.Post;
 	using SportsNet.Web.ViewModels.Post.Enums;
 
@@ -98,6 +99,13 @@
 
 			return result;
 		}
+
+		public TModel GetPost<TModel>(string postId)
+			=> this.postRepository
+			.All()
+			.Where(p => p.Id == Guid.Parse(postId))
+			.To<TModel>()
+			.FirstOrDefault()!;
 
 		public IEnumerable<PostType> GetPostTypes()
 			=> Enum.GetValues(typeof(PostType))
