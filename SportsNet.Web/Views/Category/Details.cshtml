@@ -1,4 +1,4 @@
-﻿@model AllCategoriesQueryServiceModel
+﻿@model AllCategoriesQueryModel
 @{
 	ViewBag.Title = $"{Model.Category.Name} Forum";
 }
@@ -17,7 +17,7 @@
 			   class="btn btn-primary fw-bold mb-3 mt-3 text-md-center"> Add new Post </a>
 			<div class="row">
 				<div class="fw-bold text-md-center">
-					@if (!User.Identity?.IsAuthenticated ?? false)
+					@if (!this.User.Identity?.IsAuthenticated ?? false)
 					{
 						<p>You have to <a href="/Identity/Account/Login">Log in</a> to post in the Forum!</p>
 					}

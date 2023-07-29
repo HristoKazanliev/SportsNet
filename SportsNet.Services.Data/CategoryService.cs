@@ -5,7 +5,6 @@
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
-	using SportsNet.Services.Data.Models.Category;
 	using SportsNet.Services.Data.Models.Post;
 	using SportsNet.Services.Mapping;
 	using SportsNet.Web.ViewModels.Categories;
@@ -74,7 +73,7 @@
             return categories;
 		}
 		
-		public AllCategoriesQueryServiceModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue)
+		public AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue)
 		{
 			IQueryable<Post> postQuery = this.postsRepository.All().Where(p => p.CategoryId == categoryId);
 
@@ -84,7 +83,7 @@
 
 			var posts = this.GetPosts(postQuery);
 			
-			return new AllCategoriesQueryServiceModel
+			return new AllCategoriesQueryModel
 			{
 				TotalPosts = totalPosts,
 				CurrentPage = currentPage,

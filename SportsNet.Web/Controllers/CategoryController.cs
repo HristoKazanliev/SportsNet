@@ -5,7 +5,6 @@
 	using SportsNet.Data.Models;
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data.Interfaces;
-	using SportsNet.Services.Data.Models.Category;
 	using SportsNet.Services.Data.Models.Post;
 	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
@@ -75,7 +74,7 @@
 
 		[HttpGet]
 		[AllowAnonymous]
-		public ActionResult Details([FromQuery] AllCategoriesQueryServiceModel queryModel, int id)
+		public ActionResult Details([FromQuery] AllCategoriesQueryModel queryModel, int id)
 		{
             bool categoryExists = this.categoryService.ExistsByIdAsync(id);
             if (!categoryExists) 

@@ -92,7 +92,10 @@
             }
         }
 
-        
-
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            return Ok();
+        }
 	}
 }
