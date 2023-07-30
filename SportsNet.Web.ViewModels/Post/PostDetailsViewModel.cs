@@ -33,6 +33,8 @@
 		[Display(Name = "Created On")]
 		public DateTime CreatedOn { get; set; }
 
+		public DateTime? ModifiedOn { get; set; }
+
 		public IEnumerable<CommentsInfoOnPostViewModel> Comments { get; set; }
 
 		public void CreateMappings(IProfileExpression config)

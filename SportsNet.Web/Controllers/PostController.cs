@@ -17,13 +17,11 @@
     {
         private readonly ICategoryService categoryService;
         private readonly IPostService postService;
-        private readonly IRepository<Category> categoryRepository;
 
-        public PostController(ICategoryService categoryService, IPostService postService, IRepository<Category> categoryRepository)
+        public PostController(ICategoryService categoryService, IPostService postService)
         {
             this.categoryService = categoryService;
             this.postService = postService;
-            this.categoryRepository = categoryRepository;
         }
 
         [AllowAnonymous]
@@ -61,7 +59,7 @@
         [HttpPost]
         public async Task<IActionResult> Add(PostFormModel model)
         {
-            bool categoryExists = this.categoryRepository.All().Any(c => c.Id == model.CategoryId);
+            bool categoryExists = this.categoryService.ExistsByIdAsync(model.CategoryId);
             if (!categoryExists) 
             {
                 this.ModelState.AddModelError(nameof(model.CategoryId), "Selected category does not exist!");
@@ -99,14 +97,14 @@
                 .ExistsByIdAsync(id);
             if (!postExists)
             {
-                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                TempData[ErrorMessage] = "Post with the provided id does not exist!";
                 return RedirectToAction("All", "Post");
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
             if (!isUserOwner) 
             {
-                this.TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
             }
 
@@ -140,14 +138,14 @@
                 .ExistsByIdAsync(id);
             if (!postExists)
             {
-                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                TempData[ErrorMessage] = "Post with the provided id does not exist!";
                 return RedirectToAction("All", "Post");
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
             if (!isUserOwner)
             {
-                this.TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
             }
 
@@ -155,7 +153,6 @@
             {
                 await this.postService.EditPostAsync(model, id);
 
-                return this.RedirectToAction("Details", "Post", new { id });
             }
             catch (Exception)
             {
@@ -166,6 +163,10 @@
 
                 return View(model);
             }
+
+
+            TempData[SuccessMessage] = "Post was edited successfully!";
+            return this.RedirectToAction("Details", "Post", new { id });
         }
 
         [HttpGet]
@@ -176,7 +177,7 @@
                 .ExistsByIdAsync(id);
             if (!postExists) 
             {
-                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                TempData[ErrorMessage] = "Post with the provided id does not exist!";
 				return RedirectToAction("All", "Post");
 			}
 

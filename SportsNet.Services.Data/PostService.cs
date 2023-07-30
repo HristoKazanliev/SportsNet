@@ -120,6 +120,7 @@
 			post.Content = model.Content;
 			post.CategoryId = model.CategoryId;
 			post.Type = model.Type;
+			post.ModifiedOn = DateTime.UtcNow;
 
 			await this.postRepository.SaveChangesAsync();
         }
