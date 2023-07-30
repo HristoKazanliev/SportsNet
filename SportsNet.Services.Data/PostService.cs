@@ -110,7 +110,19 @@
 			return post.AuthorId.ToString() == userId;
         }
 
-        public async Task<Post?> GetById(string postId)
+        public async Task EditPostAsync(PostFormModel model, string postId)
+        {
+            Post post = await this.GetById(postId);
+
+			post.Title = model.Title; 
+			post.Content = model.Content;
+			post.CategoryId = model.CategoryId;
+			post.Type = model.Type;
+
+			await this.postRepository.SaveChangesAsync();
+        }
+
+        public async Task<Post> GetById(string postId)
 			=> await this.postRepository
 			.All()
 			.Where(p => p.Id == Guid.Parse(postId))
@@ -127,6 +139,7 @@
 			=>  Enum.GetValues(typeof(PostType))
 			.Cast<PostType>()
 			.ToList();
-       
+
+        
     }
 }

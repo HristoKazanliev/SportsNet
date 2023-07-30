@@ -79,6 +79,7 @@
             {
                 await this.postService.CreateAsync(model, this.User.GetId()!);
 
+                TempData[SuccessMessage] = "Post was added successfully!";
                 return RedirectToAction("All", "Post");
             }
             catch (Exception)
@@ -124,6 +125,49 @@
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(PostFormModel model, string id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.Categories = await this.categoryService.AllCategoriesAsync();
+                model.Types = this.postService.GetPostTypes();
+
+                return View(model);
+            }
+
+            bool postExists = await this.postService
+                .ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                return RedirectToAction("All", "Post");
+            }
+
+            bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
+            if (!isUserOwner)
+            {
+                this.TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                return RedirectToAction("Details", "Post", new { id });
+            }
+
+            try
+            {
+                await this.postService.EditPostAsync(model, id);
+
+                return this.RedirectToAction("Details", "Post", new { id });
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Unexpected error occurred while trying to update the post. Please try again later or contact administrator!");
+                model.Categories = await this.categoryService.AllCategoriesAsync();
+                model.Types = this.postService.GetPostTypes();
+
+                return View(model);
+            }
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
@@ -153,7 +197,7 @@
             TempData[ErrorMessage] =
                 "Unexpected error occurred! Please try again later or contact administrator";
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All", "Post");
         }
     }
 }

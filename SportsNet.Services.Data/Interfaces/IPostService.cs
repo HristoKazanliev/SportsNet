@@ -17,6 +17,8 @@
 
         Task<bool> IsUserOwner(string postId, string userId);
 
+        Task EditPostAsync(PostFormModel model, string postId);
+
         Task<Post> GetById(string postId);
 
         TModel GetPost<TModel>(string postId);
