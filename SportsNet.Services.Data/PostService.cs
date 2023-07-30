@@ -73,7 +73,7 @@
 			};
 		}
 
-		public async Task CreateAsync(PostFormModel formModel, string userId)
+		public async Task<string> CreateAsync(PostFormModel formModel, string userId)
 		{
 			Enum.TryParse(typeof(PostType), formModel.Type.ToString(), out object? typeResult);
 
@@ -88,6 +88,8 @@
 
 			await this.postRepository.AddAsync(post);
 			await this.postRepository.SaveChangesAsync();
+
+			return post.Id.ToString();
 		}
 
 		public async Task<bool> ExistsByIdAsync(string postId)

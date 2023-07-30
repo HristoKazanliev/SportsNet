@@ -42,7 +42,7 @@
             return allNames;
         }
 
-        public async Task CreateAsync(CategoryFormModel formModel)
+        public async Task<int> CreateAsync(CategoryFormModel formModel)
         {
             Category newCategory = new Category()
             {
@@ -53,6 +53,8 @@
 
             await this.categoriesRepository.AddAsync(newCategory);
             await this.categoriesRepository.SaveChangesAsync();
+
+            return newCategory.Id;
         }
 
 		public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()

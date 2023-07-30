@@ -9,7 +9,7 @@
     {
         IEnumerable<PostType> GetPostTypes();
 
-        Task CreateAsync(PostFormModel formModel, string userId);
+        Task<string> CreateAsync(PostFormModel formModel, string userId);
 
         Task<AllPostsQueryServiceModel> AllAsync(AllPostsQueryModel queryModel);
 

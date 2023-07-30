@@ -60,9 +60,9 @@
 
             try
             {
-                await this.categoryService.CreateAsync(model);
+                int categoryId = await this.categoryService.CreateAsync(model);
 
-                return RedirectToAction("All", "Category");
+                return RedirectToAction("Details", "Category", new { id = categoryId });
             }
             catch (Exception)
             {
