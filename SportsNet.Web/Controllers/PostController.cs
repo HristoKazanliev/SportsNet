@@ -9,7 +9,8 @@
     using SportsNet.Services.Data.Models.Post;
     using SportsNet.Web.Infrastructure.Extensions;
     using SportsNet.Web.ViewModels.Post;
-    using Category = Data.Models.Category;
+
+    using static Common.NotificationMessagesConstants;
 
     [Authorize]
     public class PostController : Controller
@@ -51,12 +52,10 @@
 
                 return View(model);
             }
-            catch (Exception e )
+            catch (Exception)
             {
-                await Console.Out.WriteLineAsync(e.Message);
-                throw;
+                return GeneralError();
             }
-            
         }
 
         [HttpPost]
@@ -95,7 +94,34 @@
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            return Ok();
+            bool postExists = await this.postService
+                .ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                return RedirectToAction("All", "Post");
+            }
+
+            bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
+            if (!isUserOwner) 
+            {
+                this.TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                return RedirectToAction("Details", "Post", new { id });
+            }
+
+            try
+            {
+                PostFormModel postModel = this.postService.GetPost<PostFormModel>(id);
+                postModel.Categories = await this.categoryService.AllCategoriesAsync();
+                postModel.Types = this.postService.GetPostTypes();
+
+                return View(postModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
         }
 
         [HttpGet]
@@ -106,6 +132,7 @@
                 .ExistsByIdAsync(id);
             if (!postExists) 
             {
+                this.TempData[ErrorMessage] = "Post with the provided id does not exist!";
 				return RedirectToAction("All", "Post");
 			}
 
@@ -117,9 +144,16 @@
             }
             catch (Exception)
             {
-
-                throw;
+                return GeneralError();
             }
         }
-	}
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
+        }
+    }
 }

@@ -7,7 +7,6 @@
     using SportsNet.Services.Data.Interfaces;
 	using SportsNet.Services.Data.Models.Post;
 	using SportsNet.Services.Mapping;
-	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
     using System.Threading;

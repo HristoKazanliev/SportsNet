@@ -1,7 +1,6 @@
 ﻿namespace SportsNet.Services.Data.Interfaces
 {
 	using SportsNet.Services.Data.Models.Post;
-	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
 
 	public interface ICategoryService

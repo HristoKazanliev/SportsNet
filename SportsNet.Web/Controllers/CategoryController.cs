@@ -6,7 +6,6 @@
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data.Interfaces;
 	using SportsNet.Services.Data.Models.Post;
-	using SportsNet.Web.ViewModels.Categories;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
 	using static Microsoft.EntityFrameworkCore.DbLoggerCategory;

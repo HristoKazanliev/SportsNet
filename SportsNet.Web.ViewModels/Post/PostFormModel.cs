@@ -1,13 +1,14 @@
 ﻿namespace SportsNet.Web.ViewModels.Post
 {
     using System.ComponentModel.DataAnnotations;
-
+    using SportsNet.Data.Models;
     using SportsNet.Data.Models.Enums;
-    using SportsNet.Web.ViewModels.Categories;
+    using SportsNet.Services.Mapping;
+    using SportsNet.Web.ViewModels.Category;
 
     using static Common.EntityValidationConstants.Post;
 
-    public class PostFormModel
+    public class PostFormModel : IMapFrom<Post>, IMapFrom<Category>
     {
         public PostFormModel()
         {

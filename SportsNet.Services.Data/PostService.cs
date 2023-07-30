@@ -100,18 +100,33 @@
 			return result;
 		}
 
-		public TModel GetPost<TModel>(string postId)
+        public async Task<bool> IsUserOwner(string postId, string userId)
+        {
+			Post post = await this.postRepository
+				.All()
+				.Where(p => p.IsDeleted == false)
+				.FirstAsync(p => p.Id.ToString() == postId);
+
+			return post.AuthorId.ToString() == userId;
+        }
+
+        public async Task<Post?> GetById(string postId)
+			=> await this.postRepository
+			.All()
+			.Where(p => p.Id == Guid.Parse(postId))
+			.FirstOrDefaultAsync();
+
+        public TModel GetPost<TModel>(string postId)
 			=> this.postRepository
 			.All()
 			.Where(p => p.Id == Guid.Parse(postId))
 			.To<TModel>()
 			.FirstOrDefault()!;
 
-		public IEnumerable<PostType> GetPostTypes()
-			=> Enum.GetValues(typeof(PostType))
+        public IEnumerable<PostType> GetPostTypes()
+			=>  Enum.GetValues(typeof(PostType))
 			.Cast<PostType>()
 			.ToList();
-
-
-	}
+       
+    }
 }

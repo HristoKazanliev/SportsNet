@@ -15,6 +15,10 @@
 
 		Task<bool> ExistsByIdAsync(string postId);
 
-		TModel GetPost<TModel>(string postId);
+        Task<bool> IsUserOwner(string postId, string userId);
+
+        Task<Post> GetById(string postId);
+
+        TModel GetPost<TModel>(string postId);
 	}
 }
