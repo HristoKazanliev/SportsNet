@@ -16,7 +16,7 @@
 			<p><strong>Created On:</strong> @Model.CreatedOn.ToString("dd/MM/yyyy HH:mm")</p>
 			@if (!Model.ModifiedOn.Equals(null))
 			{
-				<p><strong>Modified On:</strong> @Model.ModifiedOn.Value.AddHours(3).ToString("dd/MM/yyyy HH:mm")</p>
+				<p class="mb-1"><strong>Modified On:</strong> @Model.ModifiedOn.Value.AddHours(3).ToString("dd/MM/yyyy HH:mm")</p>
 			}
 		</div>
 	</div>
