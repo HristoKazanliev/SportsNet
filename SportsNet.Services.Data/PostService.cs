@@ -125,16 +125,26 @@
 			await this.postRepository.SaveChangesAsync();
         }
 
+        public async Task DeletePostAsync(string postId)
+        {
+            Post post =  await this.GetById(postId);
+
+			post.IsDeleted = true;
+			post.DeletedOn = DateTime.UtcNow.AddHours(3);
+
+			await this.postRepository.SaveChangesAsync();
+        }
+
         public async Task<Post> GetById(string postId)
 			=> await this.postRepository
 			.All()
-			.Where(p => p.Id == Guid.Parse(postId))
-			.FirstOrDefaultAsync();
+			.Where(p => !p.IsDeleted)
+			.FirstAsync(p => p.Id == Guid.Parse(postId));
 
         public TModel GetPost<TModel>(string postId)
 			=> this.postRepository
 			.All()
-			.Where(p => p.Id == Guid.Parse(postId))
+			.Where(p => p.Id == Guid.Parse(postId) && !p.IsDeleted)
 			.To<TModel>()
 			.FirstOrDefault()!;
 
@@ -143,6 +153,6 @@
 			.Cast<PostType>()
 			.ToList();
 
-        
+      
     }
 }

@@ -224,6 +224,37 @@
             
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(string id)
+        {
+            bool postExists = await this.postService
+                .ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                return RedirectToAction("All", "Post");
+            }
+
+            bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                return RedirectToAction("Details", "Post", new { id });
+            }
+
+            try
+            {
+                await this.postService.DeletePostAsync(id);
+
+                TempData[WarningMessage] = "The post was successfully deleted!";
+                return RedirectToAction("All", "Post");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

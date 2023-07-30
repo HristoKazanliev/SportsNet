@@ -19,6 +19,8 @@
 
         Task EditPostAsync(PostFormModel model, string postId);
 
+        Task DeletePostAsync(string postId);
+
         Task<Post> GetById(string postId);
 
         TModel GetPost<TModel>(string postId);
