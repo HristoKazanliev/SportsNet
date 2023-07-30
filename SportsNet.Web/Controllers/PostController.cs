@@ -193,6 +193,37 @@
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            bool postExists = await this.postService
+                .ExistsByIdAsync(id);
+            if (!postExists)
+            {
+                TempData[ErrorMessage] = "Post with the provided id does not exist!";
+                return RedirectToAction("All", "Post");
+            }
+
+            bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
+                return RedirectToAction("Details", "Post", new { id });
+            }
+
+            try
+            {
+                PostDetailsViewModel post = this.postService.GetPost<PostDetailsViewModel>(id);
+
+                return View(post);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+            
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] =

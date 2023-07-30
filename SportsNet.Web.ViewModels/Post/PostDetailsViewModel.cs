@@ -30,7 +30,6 @@
 
 		public ApplicationUser Author { get; set; } = null!;
 
-		[Display(Name = "Created On")]
 		public DateTime CreatedOn { get; set; }
 
 		public DateTime? ModifiedOn { get; set; }
