@@ -8,7 +8,8 @@
 	using SportsNet.Services.Data.Models.Post;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
-	using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+    using static SportsNet.Common.NotificationMessagesConstants;
 
 	[Authorize]
     public class CategoryController : Controller
@@ -78,7 +79,8 @@
             bool categoryExists = this.categoryService.ExistsByIdAsync(id);
             if (!categoryExists) 
             {
-				return RedirectToAction("All", "Category");
+                TempData[ErrorMessage] = "Category with the provided id does not exist!";
+                return RedirectToAction("All", "Category");
 			}
 
 			try
