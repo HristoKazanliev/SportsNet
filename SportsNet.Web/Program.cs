@@ -13,8 +13,9 @@ namespace SportsNet.Web
     using SportsNet.Web.Infrastructure.Extensions;
 	using SportsNet.Web.ViewModels;
 	using SportsNet.Services.Mapping;
+    using Microsoft.AspNetCore.Mvc;
 
-	public class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
@@ -43,7 +44,12 @@ namespace SportsNet.Web
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddApplicationServices(typeof(IPostService));
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+                });
 
             WebApplication app = builder.Build();
 
