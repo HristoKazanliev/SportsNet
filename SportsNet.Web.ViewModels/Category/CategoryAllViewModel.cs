@@ -3,7 +3,7 @@
 	using SportsNet.Data.Models;
 	using SportsNet.Services.Mapping;
 
-	public class CategoryAllViewModel : IMapFrom<Category>
+	public class CategoryAllViewModel : IMapFrom<Category>, ICategoryDetailsModel
 	{
         public int Id { get; set; }
 

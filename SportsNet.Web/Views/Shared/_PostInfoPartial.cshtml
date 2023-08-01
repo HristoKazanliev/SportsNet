@@ -4,7 +4,7 @@
 	<div class="card-header">
 		<div class="row">
 			<h3 class="col-6 ">
-				<a asp-controller="Category" asp-action="Details" asp-route-id=" @Model.CategoryId">@Model.Category.Name</a>
+				<a asp-controller="Category" asp-action="Details" asp-route-id="@Model.CategoryId" asp-route-information="@Model.Category.Name.Replace(" ", "-")">@Model.Category.Name</a>
 			</h3>
 			<div style="color: #20247b" class="fw-bold text-end col-6">
 				Upvotes :

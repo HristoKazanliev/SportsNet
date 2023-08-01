@@ -100,8 +100,20 @@
 		public bool ExistsByIdAsync(int id)
 		    => this.categoriesRepository.All().Any(c => c.Id == id);
 
+        public async Task<CategoryDetailsViewModel> GetDetailsForName(int id)
+        {
+            Category category = await this.categoriesRepository.All().FirstAsync(c => c.Id == id);
 
-        private CategoryAllViewModel GetCategory(int categoryId)
+            CategoryDetailsViewModel model = new CategoryDetailsViewModel
+            {
+                Id = id,
+                Name = category.Name
+            };
+
+            return model;
+        }
+
+		private CategoryAllViewModel GetCategory(int categoryId)
             => this.categoriesRepository
             .All()
             .Where(c => c.Id == categoryId)

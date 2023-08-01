@@ -24,7 +24,7 @@
 						<div class="row mt-3">
 							<p class="card-text fw-bold">Posts in this category: @category.PostsCount</p>
 							<div class="card-text">
-								<a asp-controller="Category" asp-action="Details" asp-route-id="@category.Id"
+								<a asp-controller="Category" asp-action="Details" asp-route-id="@category.Id" asp-route-information="@category.Name.Replace(" ", "-")"
 								   class="btn btn-primary text-light">Proceed to Forum</a>
 							</div>
 						</div>

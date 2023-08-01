@@ -6,6 +6,7 @@
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data.Interfaces;
 	using SportsNet.Services.Data.Models.Post;
+	using SportsNet.Web.Infrastructure.Extensions;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
 
@@ -41,7 +42,7 @@
             }
             catch (Exception)
             {
-                return BadRequest();
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -63,7 +64,7 @@
             {
                 int categoryId = await this.categoryService.CreateAsync(model);
 
-                return RedirectToAction("Details", "Category", new { id = categoryId });
+                return RedirectToAction("Details", "Category", new { id = categoryId, information = model.Name });
             }
             catch (Exception)
             {
@@ -74,13 +75,19 @@
 
 		[HttpGet()]
 		[AllowAnonymous]
-		public ActionResult Details([FromQuery] AllCategoriesQueryModel queryModel, int id)
+		public async Task<ActionResult> Details([FromQuery] AllCategoriesQueryModel queryModel, int id, string information)
 		{
             bool categoryExists = this.categoryService.ExistsByIdAsync(id);
             if (!categoryExists) 
             {
                 TempData[ErrorMessage] = "Category with the provided id does not exist!";
                 return RedirectToAction("All", "Category");
+			}
+
+            CategoryDetailsViewModel model = await this.categoryService.GetDetailsForName(id);
+            if (model.GetUrlInformation() != information)
+            {
+				return RedirectToAction("Error", "Home");
 			}
 
 			try
@@ -95,9 +102,8 @@
 			}
             catch (Exception)
             {
-
-                return BadRequest();
-            }
+				return RedirectToAction("Error", "Home");
+			}
 		}
 	}
 }

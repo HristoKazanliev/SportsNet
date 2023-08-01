@@ -15,6 +15,8 @@
 
 		AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue);
 
+		Task<CategoryDetailsViewModel> GetDetailsForName(int id);
+
 		bool ExistsByNameAsync(string name);
 
 		bool ExistsByIdAsync(int id);
