@@ -3,8 +3,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using SportsNet.Data.Models;
-    using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
     using SportsNet.Services.Data.Models.Post;
     using SportsNet.Web.Infrastructure.Extensions;

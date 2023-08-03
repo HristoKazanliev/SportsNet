@@ -15,6 +15,8 @@ namespace SportsNet.Web
 	using SportsNet.Services.Mapping;
     using Microsoft.AspNetCore.Mvc;
 
+    using static Common.GeneralApplicationConstants;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -38,8 +40,9 @@ namespace SportsNet.Web
                     builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
                 options.Password.RequiredLength =
                     builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
-            }) 
-                .AddEntityFrameworkStores<SportsNetDbContext>();
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddEntityFrameworkStores<SportsNetDbContext>();
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddApplicationServices(typeof(IPostService));
@@ -74,6 +77,8 @@ namespace SportsNet.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.SeedAdministrator(AdminEmail);
 
             app.UseEndpoints(config =>
             {
