@@ -1,4 +1,5 @@
-﻿@model PostDetailsViewModel
+﻿@using SportsNet.Web.Infrastructure.Extensions;
+@model PostDetailsViewModel
 
 <article>
 	<div class="card-header">
@@ -28,7 +29,7 @@
 		<div class="float-end">
 			@if (User.Identity?.IsAuthenticated ?? false)
 			{
-				@if (Model.Author.UserName == this.User.Identity.Name)
+				@if (Model.Author.UserName == this.User.Identity.Name || this.User.IsAdmin())
 				{
 					<a asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Id"
 					   class="btn btn-info">Edit</a>
