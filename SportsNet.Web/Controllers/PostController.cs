@@ -100,7 +100,7 @@
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
-            if (!isUserOwner) 
+            if (!isUserOwner && !this.User.IsAdmin()) 
             {
                 TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
@@ -141,7 +141,7 @@
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
@@ -203,7 +203,7 @@
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
@@ -234,7 +234,7 @@
             }
 
             bool isUserOwner = await this.postService.IsUserOwner(id, this.User.GetId()!);
-            if (!isUserOwner)
+            if (!isUserOwner && !this.User.IsAdmin())
             {
                 TempData[ErrorMessage] = "You must be admin or owner of the post you want to edit!";
                 return RedirectToAction("Details", "Post", new { id });
