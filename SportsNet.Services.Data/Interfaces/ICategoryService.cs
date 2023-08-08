@@ -13,6 +13,8 @@
 
         Task EditCategoryAsync(int categoryId, string name, string description, string imageUrl);
 
+        Task DeleteCategoryAsync(int categoryId);
+
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
 		AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue);

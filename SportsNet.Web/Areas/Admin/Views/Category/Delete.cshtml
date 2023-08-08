@@ -1,0 +1,50 @@
+﻿@model CategoryFormModel
+@{
+	ViewBag.Title = "Delete Category";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mb-4 shadow">
+                <img class="img-card" src='@this.Model.ImageUrl' alt=''>
+                <div class="card-body">
+                    <h4 class="card-title">Post Details</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">Id</dt>
+                        <dd class="col-sm-8">@Model.Id</dd>
+
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+
+                        <dt class="col-sm-4">ImageUrl</dt>
+                        <dd class="col-sm-8">@Model.ImageUrl</dd>
+
+                        <div class="card-body text-center">
+                            <form method="post">
+                                <button asp-area="Admin"
+                                        asp-controller="Category"
+                                        asp-action="DeleteConfirmation"
+                                        asp-route-id="@Model.Id"
+                                        class="btn btn-outline-danger btn-lg">
+                                    Yes
+                                </button>
+                                <a asp-controller="Category"
+                                   asp-action="All"
+                                   asp-area="Admin"
+                                   class="btn btn-outline-primary btn-lg">No</a>
+                            </form>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

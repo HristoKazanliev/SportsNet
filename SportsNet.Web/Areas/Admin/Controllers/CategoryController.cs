@@ -90,5 +90,34 @@
 
 			return this.RedirectToAction("All", "Category");
 		}
-	}
+
+        [HttpGet]
+        public IActionResult Delete(int id) 
+        {
+			Category categoryModel = this.categoryService.GetCategoryById(id);
+			if (categoryModel == null)
+			{
+				return this.NotFound();
+			}
+
+			CategoryFormModel category = this.categoryService.GetCategoryById<CategoryFormModel>(id);
+
+            return View(category);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(int id)
+        {
+            bool categoryExists = this.categoryService.ExistsByIdAsync(id);
+            if (!categoryExists)
+            {
+                return this.NotFound();
+            }
+
+            await this.categoryService.DeleteCategoryAsync(id);
+
+            return this.RedirectToAction("All", "Category");
+        }
+
+    }
 }

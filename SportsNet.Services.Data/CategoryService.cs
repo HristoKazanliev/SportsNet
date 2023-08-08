@@ -68,10 +68,21 @@
 			await this.categoriesRepository.SaveChangesAsync();
 		}
 
+        public async Task DeleteCategoryAsync(int categoryId)
+        {
+            Category category = this.GetCategoryById(categoryId);
+
+            category.IsDeleted = true;
+            category.DeletedOn = DateTime.UtcNow.AddHours(3);
+
+            await this.categoriesRepository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()
 		{
 			IEnumerable<CategoryAllViewModel> categories = await this.categoriesRepository
                 .All()
+                .Where(c => c.IsDeleted == false)
                 .Select(c => new CategoryAllViewModel()
                 {
                     Id = c.Id,
@@ -145,6 +156,6 @@
 		private IEnumerable<PostAllViewModel> GetPosts(IQueryable<Post> postQuery)
 		  => postQuery
 			  .To<PostAllViewModel>()
-			  .ToList();
+			  .ToList();       
     }
 }
