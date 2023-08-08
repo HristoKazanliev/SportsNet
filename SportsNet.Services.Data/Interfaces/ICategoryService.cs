@@ -9,7 +9,7 @@
 
         Task<IEnumerable<CategoryAllViewModel>> GetCategories();
 
-		Task<int> CreateAsync(CategoryFormModel formModel);
+		Task<int> CreateAsync(string name, string description, string imageUrl);
 
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 

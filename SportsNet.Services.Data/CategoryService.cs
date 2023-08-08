@@ -42,13 +42,13 @@
             return allNames;
         }
 
-        public async Task<int> CreateAsync(CategoryFormModel formModel)
+        public async Task<int> CreateAsync(string name, string description, string imageUrl)
         {
             Category newCategory = new Category()
             {
-                Name = formModel.Name,
-                Description = formModel.Description,
-                ImageUrl = formModel.ImageUrl,
+                Name = name,
+                Description = description,
+                ImageUrl = imageUrl,
             };
 
             await this.categoriesRepository.AddAsync(newCategory);

@@ -23,7 +23,6 @@ namespace SportsNet.Web
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SportsNetDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -46,6 +45,11 @@ namespace SportsNet.Web
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddApplicationServices(typeof(IPostService));
+
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.AccessDeniedPath = "/Home/Error/401";
+            });
 
             builder.Services
                 .AddControllersWithViews()
