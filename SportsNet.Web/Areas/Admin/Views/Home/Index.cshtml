@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mt-4 p-5 bg-light text-center">
+    <h2 class="display-4">Hello, Admin!</h2>
+    <div class="row mt-lg-5">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Manage categories</h5>
+                    <p class="card-text">Using this panel you can Create, Edit or Delete certain category.</p>
+                    <a asp-area="Admin" asp-controller="Category" asp-action="All" class="btn btn-outline-primary">Continue</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header">Image requests</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Image requests</h5>
+                    <p class="card-text">Using this panel you can approve or reject an image request.</p>
+                    <a asp-area="Admin" asp-controller="Image" asp-action="All" class="btn btn-outline-primary">Continue</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

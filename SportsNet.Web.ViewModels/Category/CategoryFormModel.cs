@@ -4,7 +4,7 @@
 
     using static Common.EntityValidationConstants.Category;
 
-    public class CategoryFormModel
+    public class CategoryFormModel 
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

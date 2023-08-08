@@ -64,7 +64,7 @@
             }
             catch (Exception)
             {
-                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add your new category! Please try again later or contact administrator!");
+                this.ModelState.AddModelError(string.Empty, "Unexpected error occurred while trying to add your new category! Please try again later!");
                 return View(model);
             }
         }

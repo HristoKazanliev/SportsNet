@@ -82,7 +82,11 @@ namespace SportsNet.Web
 
             app.UseEndpoints(config =>
             {
-                config.MapControllerRoute(
+				config.MapControllerRoute(
+			       name: "areas",
+			       pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+				config.MapControllerRoute(
                     name: "RouteTemplate",
                     pattern: "/{controller}/{action}/{id}/{information}",
                     defaults: new { Controller = "Category", Action = "Details" });

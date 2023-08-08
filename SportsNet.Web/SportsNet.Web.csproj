@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,10 @@
     <ProjectReference Include="..\SportsNet.Services.Mapping\SportsNet.Services.Mapping.csproj" />
     <ProjectReference Include="..\SportsNet.Web.Infrastructure\SportsNet.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SportsNet.Web.ViewModels\SportsNet.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\ViewModels\" />
   </ItemGroup>
 
 </Project>
