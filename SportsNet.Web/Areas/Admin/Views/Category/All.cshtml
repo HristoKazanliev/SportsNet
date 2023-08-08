@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CategoryAllViewModel>
+@{
+	this.ViewData["Title"] = "All Categories";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h3 class="fw-bold text-black text-decoration-underline">Choose your forum!</h3>
+		</div>
+	</div>
+	<div class="row">
+		@foreach (var category in Model)
+		{
+			<div class="col-md-4 mb-4 mt-4">
+				<div class="card col-md-12">
+					<img class="card-img-top" src="@category.ImageUrl" alt="Post Image">
+					<div class="card-body text-center">
+						<h3 class="card-title">@category.Name</h3>
+						<p class="card-text">@category.Description</p>
+						<div class="row mt-3">
+							<p class="card-text fw-bold">Posts in this category: @category.PostsCount</p>
+							<div class="card-text">
+								<a asp-area="Admin"
+								   asp-controller="Category"
+								   asp-action="Edit"
+								   asp-route-id="@category.Id"
+								   class="btn btn-info">Edit
+								</a>
+								<a asp-area="Admin"
+								   asp-controller="Category"
+								   asp-action="Delete"
+								   asp-route-id="@category.Id"
+								   class="btn btn-danger">Delete
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+
+

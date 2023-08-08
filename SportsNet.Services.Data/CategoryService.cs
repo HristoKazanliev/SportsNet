@@ -57,7 +57,18 @@
             return newCategory.Id;
         }
 
-		public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()
+        public async Task EditCategoryAsync(int categoryId, string name, string description, string imageUrl)
+        {
+			Category category = this.GetCategoryById(categoryId);
+
+			category.Name = name;
+			category.Description = description;
+			category.ImageUrl = imageUrl;
+
+			await this.categoriesRepository.SaveChangesAsync();
+		}
+
+        public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()
 		{
 			IEnumerable<CategoryAllViewModel> categories = await this.categoriesRepository
                 .All()
@@ -94,7 +105,18 @@
 			};
 		}
 
-		public bool ExistsByNameAsync(string name)
+        public T GetCategoryById<T>(int categoryId)
+            => this.categoriesRepository.All()
+            .Where(c => c.Id == categoryId)
+            .To<T>()
+            .FirstOrDefault()!;
+
+        public Category GetCategoryById(int categoryId)
+            => this.categoriesRepository.All()
+            .Where(c => c.Id == categoryId)
+            .FirstOrDefault()!;
+
+        public bool ExistsByNameAsync(string name)
 			=> this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
 
 		public bool ExistsByIdAsync(int id)
@@ -124,5 +146,5 @@
 		  => postQuery
 			  .To<PostAllViewModel>()
 			  .ToList();
-	}
+    }
 }

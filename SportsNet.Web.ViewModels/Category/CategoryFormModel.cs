@@ -1,11 +1,15 @@
 ﻿namespace SportsNet.Web.ViewModels.Category
 {
+    using SportsNet.Data.Models;
+    using SportsNet.Services.Mapping;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.EntityValidationConstants.Category;
 
-    public class CategoryFormModel 
+    public class CategoryFormModel : IMapFrom<Category>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; set; } = null!;

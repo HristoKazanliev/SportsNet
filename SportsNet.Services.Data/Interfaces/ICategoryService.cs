@@ -1,6 +1,6 @@
 ﻿namespace SportsNet.Services.Data.Interfaces
 {
-	using SportsNet.Services.Data.Models.Post;
+    using SportsNet.Data.Models;
 	using SportsNet.Web.ViewModels.Category;
 
 	public interface ICategoryService
@@ -11,13 +11,19 @@
 
 		Task<int> CreateAsync(string name, string description, string imageUrl);
 
+        Task EditCategoryAsync(int categoryId, string name, string description, string imageUrl);
+
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
 		AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue);
 
 		Task<CategoryDetailsViewModel> GetDetailsForName(int id);
 
-		bool ExistsByNameAsync(string name);
+        T GetCategoryById<T>(int categoryId);
+
+        Category GetCategoryById(int categoryId);
+
+        bool ExistsByNameAsync(string name);
 
 		bool ExistsByIdAsync(int id);
 
