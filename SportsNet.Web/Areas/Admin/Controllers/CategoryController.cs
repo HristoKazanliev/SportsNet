@@ -70,8 +70,6 @@
             CategoryFormModel category = this.categoryService.GetCategoryById<CategoryFormModel>(id);
             if (category == null)
             {
-                //this.ModelState.AddModelError(string.Empty, "Category with the provided id does not exist!");
-                //return RedirectToAction("All", "Category");
 				return this.NotFound();
 			}
 

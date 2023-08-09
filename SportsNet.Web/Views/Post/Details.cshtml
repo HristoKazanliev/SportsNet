@@ -35,6 +35,13 @@
 												<p class="fs-3">@comment.Content</p>
 											</div>
 										</div>
+										<div class="float-end">
+											@if (comment.Author == this.User.Identity.Name || this.User.IsInRole("Administrator"))
+											{
+												<a asp-controller="Comment" asp-action="Delete" asp-route-postId="@Model.Id" asp-route-commentId="@comment.Id"
+												   class="btn btn-danger">Delete</a>
+											}
+										</div>
 									</li>
 								</ul>
 							</div>

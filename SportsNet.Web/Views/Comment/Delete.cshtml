@@ -1,0 +1,46 @@
+﻿@model DeleteCommentViewModel
+@{
+    ViewBag.Title = "Delete Comment";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mb-4 shadow">
+                <div class="card-body">
+                    <h4 class="card-title">Comment Details</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">Author</dt>
+                        <dd class="col-sm-8">@Model.Author.UserName</dd>
+
+                        <dt class="col-sm-4">Created On</dt>
+                        <dd class="col-sm-8">@Model.CreatedOn</dd>
+
+                        <dt class="col-sm-4">Content</dt>
+                        <dd class="col-sm-8">@Model.Content</dd>
+
+                        <div class="card-body text-center">
+                            <form method="post">
+                                <button asp-controller="Comment"
+                                        asp-action="DeleteConfirmation"
+                                        asp-route-postId="@Model.PostId" 
+                                        asp-route-commentId="@Model.Id"
+                                        class="btn btn-outline-danger btn-lg">
+                                    Yes
+                                </button>
+                                <a asp-controller="Post"
+                                   asp-action="Details"
+                                   asp-route-id="@Model.PostId"
+                                   class="btn btn-outline-primary btn-lg">No</a>
+                            </form>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
