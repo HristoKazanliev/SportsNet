@@ -1,6 +1,6 @@
-﻿@model CategoryFormModel
+﻿@model ImageFormViewModel
 @{
-    ViewData["Title"] = "Add Category";
+    ViewData["Title"] = "Add Image";
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
@@ -9,11 +9,6 @@
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post">
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" placeholder="Name...">
-                <span asp-validation-for="Name" class="small text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Description"></label>
                 <textarea asp-for="Description" rows="4" class="form-control" placeholder="Description..."></textarea>
@@ -36,4 +31,3 @@
     {
     <partial name="_ValidationScriptsPartial" />
 }
-

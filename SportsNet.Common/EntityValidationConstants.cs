@@ -31,7 +31,7 @@
         public static class Image
         {
             public const int DescriptionMinLength = 10;
-            public const int DescriptionMaxLength = 30;
+            public const int DescriptionMaxLength = 50;
 
             public const int UrlMaxLength = 2048;
         }
