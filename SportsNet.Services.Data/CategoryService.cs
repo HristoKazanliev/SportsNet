@@ -5,11 +5,9 @@
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
-	using SportsNet.Services.Data.Models.Post;
 	using SportsNet.Services.Mapping;
 	using SportsNet.Web.ViewModels.Category;
 	using SportsNet.Web.ViewModels.Post;
-    using System.Threading;
 
     public class CategoryService : ICategoryService
     {

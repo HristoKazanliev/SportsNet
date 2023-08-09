@@ -1,8 +1,8 @@
 ﻿namespace SportsNet.Services.Data
 {
-	using Interfaces;
 	using Microsoft.EntityFrameworkCore;
-	using SportsNet.Data;
+
+	using Interfaces;
 	using SportsNet.Data.Models;
 	using SportsNet.Data.Models.Enums;
 	using SportsNet.Data.Repositories.Interfaces;

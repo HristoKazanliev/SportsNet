@@ -1,10 +1,13 @@
 ﻿namespace SportsNet.Web.ViewModels.Image
 {
-	using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
+
+    using SportsNet.Data.Models;
+    using SportsNet.Services.Mapping;
 
 	using static Common.EntityValidationConstants.Image;
 
-	public class ImageFormViewModel
+	public class ImageFormViewModel : IMapFrom<Image>
 	{
         public int Id { get; set; }
 
@@ -12,9 +15,8 @@
 		[StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
 		public string Description { get; set; } = null!;
 
-		[MaxLength(UrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
-		public string AuthorId { get; set; } = null!;
+		public string? AuthorId { get; set; } 
 	}
 }

@@ -22,7 +22,8 @@
 			{
 				Description = viewModel.Description,
 				ImageUrl = viewModel.ImageUrl,
-				AuthorId = Guid.Parse(viewModel.AuthorId)
+				AuthorId = Guid.Parse(viewModel.AuthorId!),
+				CreatedOn = DateTime.Now.AddHours(3)
 			};
 
 			await this.imageRepository.AddAsync(image);

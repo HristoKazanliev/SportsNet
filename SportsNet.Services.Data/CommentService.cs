@@ -1,8 +1,6 @@
 ﻿namespace SportsNet.Services.Data
 {
 	using Interfaces;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNetCore.Identity;
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Web.ViewModels.Comment;

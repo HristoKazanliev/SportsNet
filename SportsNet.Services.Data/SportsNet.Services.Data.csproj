@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SportsNet.Common\SportsNet.Common.csproj" />
     <ProjectReference Include="..\SportsNet.Data.Common\SportsNet.Data.Common.csproj" />
     <ProjectReference Include="..\SportsNet.Data.Models\SportsNet.Data.Models.csproj" />
