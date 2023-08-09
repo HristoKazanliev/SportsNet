@@ -29,7 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\ViewModels\Category\" />
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Views\Image\" />
   </ItemGroup>
 
 </Project>
