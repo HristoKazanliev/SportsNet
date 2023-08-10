@@ -8,14 +8,19 @@
 
 @if (!this.Model.Any())
 {
-	<div class="container">
-		<h3 class="text-center fw-bold">No images yet!</h3>
-		<br>
-		<p class="text-center h4">Be the first person to create one by clicking on the "Add new Image" button!</p>
+	<div class="container text-center">
+		<h3 class="fw-bold">No images yet!</h3>
+		<p class="h4">Be the first person to create one by clicking on the "Add new Image" button!</p>
+		<a asp-controller="Image" asp-action="Add"
+		   class="btn btn-lg btn-primary fw-bold mb-3 mt-3"> Add new Post </a>
 	</div>
 }
 else
 {
+	<div class="text-center">
+		<a asp-controller="Image" asp-action="Add"
+		   class="btn btn-lg btn-primary fw-bold mb-3 mt-3"> Add new Post </a>
+	</div>
 	<div class="row">
 		@foreach (var image in Model)
 		{

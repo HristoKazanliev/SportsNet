@@ -36,7 +36,7 @@
         {
             Image? image = this.GetImage(imageId);
             image.IsApproved = true;
-            image.ModifiedOn = DateTime.Now.AddHours(3);
+            image.ModifiedOn = DateTime.Now;
 
             await this.imageRepository.SaveChangesAsync();
         }
