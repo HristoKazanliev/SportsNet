@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ImageAllViewModel>
+@{
+	ViewBag.Title = "All Images";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (!this.Model.Any())
+{
+	<div class="container">
+		<h3 class="text-center fw-bold">No images yet!</h3>
+		<br>
+		<p class="text-center h4">Be the first person to create one by clicking on the "Add new Image" button!</p>
+	</div>
+}
+else
+{
+	<div class="row">
+		@foreach (var image in Model)
+		{
+			<div class="col-md-4 mb-4 mt-4">
+				<div class="card col-md-12">
+					<img class="card-img-top" src="@image.ImageUrl" alt="Image">
+					<div class="card-body text-center">
+						<p class="card-text">@image.Description</p>
+						<div class="row mt-3">
+							<p class="card-text fw-bold">@image.Author!.UserName</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}

@@ -23,6 +23,15 @@
         }
 
 		[HttpGet]
+        [AllowAnonymous]
+		public IActionResult All()
+		{
+            IEnumerable<ImageAllViewModel> approvedImages = this.imageService.GetAllApprovedImages<ImageAllViewModel>();
+
+			return View(approvedImages);
+		}
+
+		[HttpGet]
 		public IActionResult Add() 
 		{ 
 			return View();
