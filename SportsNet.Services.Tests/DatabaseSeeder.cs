@@ -20,7 +20,9 @@
 		public static ApplicationUser User2 = null!;
 		public static ApplicationUser User3 = null!;
 
-		public static void SeedDatabase(SportsNetDbContext dbContext)
+        public static List<Vote> Votes = new List<Vote>() { Vote1, Vote2 };
+
+        public static void SeedDatabase(SportsNetDbContext dbContext)
 		{
 			User1 = new ApplicationUser()
 			{
@@ -119,13 +121,13 @@
 				AuthorId = Guid.Parse("9E0898D3-B83D-4583-B356-9D0C363EB67C"),
 				PostId = Guid.Parse("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0")
 			};
-			Vote2 = new Vote()
-			{
-				Id = 2,
-				Type = VoteType.UpVote,
-				AuthorId = Guid.Parse("325389F8-4E8D-4E70-8AA3-0527F0746E54"),
-				PostId = Guid.Parse("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0")
-			};
+			//Vote2 = new Vote()
+			//{
+			//	Id = 2,
+			//	Type = VoteType.UpVote,
+			//	AuthorId = Guid.Parse("325389F8-4E8D-4E70-8AA3-0527F0746E54"),
+			//	PostId = Guid.Parse("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0")
+			//};
 			Comment1 = new Comment()
 			{
 				Id = 1,
@@ -146,8 +148,9 @@
 			dbContext.Categories.AddRange(Category1, Category2);
 			dbContext.Images.AddRange(Image1, Image2);
 			dbContext.Posts.AddRange(Post1, Post2);
-			dbContext.Votes.AddRange(Vote1, Vote2);
+			dbContext.Votes.Add(Vote1);
 			dbContext.Comments.AddRange(Comment1, Comment2);
+			
 		}
 	}
 }

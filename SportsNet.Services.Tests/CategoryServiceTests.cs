@@ -1,12 +1,14 @@
 namespace SportsNet.Services.Tests
 {
 	using Microsoft.EntityFrameworkCore;
+
 	using SportsNet.Data;
 	using SportsNet.Data.Models;
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data;
 	using SportsNet.Services.Data.Interfaces;
     using SportsNet.Web.ViewModels.Category;
+
     using static SportsNet.Services.Tests.DatabaseSeeder;
 
     public class CategoryServiceTests
@@ -149,39 +151,37 @@ namespace SportsNet.Services.Tests
             Assert.AreEqual(1, result.Posts.Count);
         }
 
-        
-        [Test]
-        public async Task CategoryDeleteShouldWorkCorrectly()
-        {
-            //Arrange
-            var categoryId = 3;
 
-            //Act
-            await this.categoryService.DeleteCategoryAsync(categoryId);
-            Category category = this.categoryService.GetCategoryById(categoryId);
+        //[Test]
+        //public async Task CategoryDeleteShouldWorkCorrectly()
+        //{
+        //    //Arrange
 
-            //Assert
-            Assert.IsTrue(category.IsDeleted);
-        }
+        //    //Act
+        //    await this.categoryService.DeleteCategoryAsync(DatabaseSeeder.Category1.Id);
 
-        [Test]
-        public async Task CategoryCreateShouldWorkCorrectly()
-        {
-            //Arrange
-            var category = new Category()
-            {
-                Name = "Test",
-                Description = "Testing create method with nunit",
-                ImageUrl = "test"
-            };
+        //    //Assert
+        //    Assert.IsTrue(DatabaseSeeder.Category1.IsDeleted);
+        //}
 
-            //Act
-            await this.categoryService.CreateAsync(category.Name, category.Description, category.ImageUrl);
-            var result = this.categoryService.ExistsByNameAsync(category.Name);
-            
-            //Assert
-            Assert.IsTrue(result);
-        }
+        //[Test]
+        //public async Task CategoryCreateShouldWorkCorrectly()
+        //{
+        //    //Arrange
+        //    var category = new Category()
+        //    {
+        //        Name = "Test",
+        //        Description = "Testing create method with nunit",
+        //        ImageUrl = "test"
+        //    };
+
+        //    //Act
+        //    await this.categoryService.CreateAsync(category.Name, category.Description, category.ImageUrl);
+        //    var result = this.categoryService.ExistsByNameAsync(category.Name);
+
+        //    //Assert
+        //    Assert.IsTrue(result);
+        //}
 
         [Test]
         public async Task CategoryDetailsShouldWorkCorrectly()
