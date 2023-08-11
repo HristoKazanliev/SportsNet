@@ -1,19 +1,20 @@
 ﻿namespace SportsNet.Services.Data
 {
 	using Interfaces;
+    using SportsNet.Data;
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Web.ViewModels.Comment;
 
 	public class CommentService : ICommentService
     {
-        private readonly IRepository<Comment> commentRepository;
-        private readonly IRepository<ApplicationUser> userRepository;
+        //private readonly IRepository<Comment> commentRepository;
+        //private readonly IRepository<ApplicationUser> userRepository;
+        private readonly SportsNetDbContext dbContext;
 
-        public CommentService(IRepository<Comment> commentRepository, IRepository<ApplicationUser> userRepository)
+        public CommentService(SportsNetDbContext dbContext)
         {
-            this.commentRepository = commentRepository;
-            this.userRepository = userRepository;   
+            this.dbContext = dbContext;
         }
 
         public async Task CreateCommentAsync(string postId, string userId, string content)
@@ -26,29 +27,29 @@
                 CreatedOn = DateTime.UtcNow,
             };
 
-            await this.commentRepository.AddAsync(comment);
-            await this.commentRepository.SaveChangesAsync();
+            await this.dbContext.AddAsync(comment);
+            await this.dbContext.SaveChangesAsync();
         }
 
 		public async Task DeleteCommentAsync(string postId, int commentId)
 		{
             Comment comment = this.GetById(postId, commentId);
 
-            this.commentRepository.Delete(comment);
-            await this.commentRepository.SaveChangesAsync();
+            this.dbContext.Comments.Remove(comment);
+            await this.dbContext.SaveChangesAsync();
 		}
 
         public Comment GetById(string postId, int commentId)
-            => this.commentRepository.All()
+            => this.dbContext.Comments
                 .FirstOrDefault(c => c.PostId == Guid.Parse(postId) &&
                                     c.Id == commentId)!;
 
 		public async Task<DeleteCommentViewModel> GetCommentForDeleteByIdAsync(string postId, int commentId)
 		{
-			Comment comment = this.commentRepository.All()
+			Comment comment = this.dbContext.Comments
                 .First(c => c.PostId == Guid.Parse(postId) && c.Id == commentId);
 
-            ApplicationUser user = userRepository.All()
+            ApplicationUser user = this.dbContext.Users
                 .Where(u => u.Id == comment.AuthorId).FirstOrDefault()!;
 
             return new DeleteCommentViewModel

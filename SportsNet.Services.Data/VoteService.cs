@@ -1,19 +1,20 @@
 ﻿namespace SportsNet.Services.Data
 {
 	using System.Threading.Tasks;
-
-	using SportsNet.Data.Models;
+    using SportsNet.Data;
+    using SportsNet.Data.Models;
 	using SportsNet.Data.Models.Enums;
 	using SportsNet.Data.Repositories.Interfaces;
 	using SportsNet.Services.Data.Interfaces;
 
 	public class VoteService : IVoteService
 	{
-		private readonly IRepository<Vote> voteRepository;
+		//private readonly IRepository<Vote> voteRepository;
+		private readonly SportsNetDbContext dbContext;
 
-        public VoteService(IRepository<Vote> voteRepository)
+        public VoteService(SportsNetDbContext dbContext)
         {
-            this.voteRepository = voteRepository;
+            this.dbContext = dbContext;
         }
 
 		public async Task VoteAsync(string postId, string userId)
@@ -21,7 +22,7 @@
 			Vote? vote = this.GetVote(postId, userId);
 			if (vote != null) 
 			{
-				this.voteRepository.Delete(vote);
+				this.dbContext.Votes.Remove(vote);
 			}
 			else
 			{
@@ -33,19 +34,19 @@
 					CreatedOn = DateTime.UtcNow,
 				};
 
-				await this.voteRepository.AddAsync(vote);
+				await this.dbContext.Votes.AddAsync(vote);
 			}
 
-			await this.voteRepository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
 		public int GetVotes(string postId)
-			=> this.voteRepository.All()
+			=> this.dbContext.Votes
 			.Where(v => v.PostId.ToString() == postId)
 			.Sum(v => (int)v.Type);
 
 		private Vote? GetVote(string postId, string userId)
-			=> this.voteRepository.All()
+			=> this.dbContext.Votes
 			.FirstOrDefault(v => v.PostId.ToString() == postId 
 							&& v.AuthorId.ToString() == userId);
 	}

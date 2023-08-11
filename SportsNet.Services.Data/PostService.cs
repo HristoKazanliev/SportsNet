@@ -10,19 +10,21 @@
 	using SportsNet.Services.Mapping;
 	using SportsNet.Web.ViewModels.Post;
 	using SportsNet.Web.ViewModels.Post.Enums;
+    using SportsNet.Data;
 
-	public class PostService : IPostService
+    public class PostService : IPostService
 	{
-		private readonly IRepository<Post> postRepository;
+		//private readonly IRepository<Post> postRepository;
+		private readonly SportsNetDbContext dbContext;
 
-		public PostService(IRepository<Post> postRepository)
+		public PostService(SportsNetDbContext dbContext)
 		{
-			this.postRepository = postRepository;
+			this.dbContext = dbContext;
 		}
 
 		public async Task<AllPostsQueryServiceModel> AllAsync(AllPostsQueryModel queryModel)
 		{
-			IQueryable<Post> postsQuery = this.postRepository.All().AsQueryable();
+			IQueryable<Post> postsQuery = this.dbContext.Posts.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(queryModel.Category))
 			{
@@ -86,16 +88,15 @@
 				Type = (PostType)typeResult!
 			};
 
-			await this.postRepository.AddAsync(post);
-			await this.postRepository.SaveChangesAsync();
+			await this.dbContext.Posts.AddAsync(post);
+			await this.dbContext.SaveChangesAsync();
 
 			return post.Id.ToString();
 		}
 
 		public async Task<bool> ExistsByIdAsync(string postId)
 		{
-			bool result = await this.postRepository
-				.All()
+			bool result = await this.dbContext.Posts
 				.Where(p => p.IsDeleted == false)
 				.AnyAsync(p => p.Id == Guid.Parse(postId));
 
@@ -104,8 +105,7 @@
 
         public async Task<bool> IsUserOwner(string postId, string userId)
         {
-			Post post = await this.postRepository
-				.All()
+			Post post = await this.dbContext.Posts
 				.Where(p => p.IsDeleted == false)
 				.FirstAsync(p => p.Id.ToString() == postId);
 
@@ -122,7 +122,7 @@
 			post.Type = model.Type;
 			post.ModifiedOn = DateTime.UtcNow;
 
-			await this.postRepository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
         }
 
         public async Task DeletePostAsync(string postId)
@@ -132,18 +132,16 @@
 			post.IsDeleted = true;
 			post.DeletedOn = DateTime.UtcNow;
 
-			await this.postRepository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<Post> GetById(string postId)
-			=> await this.postRepository
-			.All()
+			=> await this.dbContext.Posts
 			.Where(p => !p.IsDeleted)
 			.FirstAsync(p => p.Id == Guid.Parse(postId));
 
         public TModel GetPost<TModel>(string postId)
-			=> this.postRepository
-			.All()
+			=> this.dbContext.Posts
 			.Where(p => p.Id == Guid.Parse(postId) && !p.IsDeleted)
 			.To<TModel>()
 			.FirstOrDefault()!;

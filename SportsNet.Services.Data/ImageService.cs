@@ -8,14 +8,16 @@
 	using SportsNet.Data.Repositories.Interfaces;
     using System.Collections.Generic;
     using SportsNet.Services.Mapping;
+    using SportsNet.Data;
 
     public class ImageService : IImageService
 	{
-		private readonly IRepository<Image> imageRepository;
+        private readonly SportsNetDbContext dbContext;
+		//private readonly IRepository<Image> imageRepository;
 
-        public ImageService(IRepository<Image> imageRepository)
+        public ImageService(SportsNetDbContext dbContext)
         {
-            this.imageRepository = imageRepository;
+            this.dbContext = dbContext;
         }
 
         public async Task CreateImageAsync(ImageFormViewModel viewModel)
@@ -28,8 +30,8 @@
 				CreatedOn = DateTime.Now.AddHours(3)
 			};
 
-			await this.imageRepository.AddAsync(image);
-			await this.imageRepository.SaveChangesAsync();
+			await this.dbContext.Images.AddAsync(image);
+			await this.dbContext.SaveChangesAsync();
 		}
 
         public async Task ApproveImageAsync(int imageId)
@@ -38,19 +40,19 @@
             image.IsApproved = true;
             image.ModifiedOn = DateTime.Now;
 
-            await this.imageRepository.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task RejectImageAsync(int imageId)
         {
             Image image = this.GetImage(imageId)!;
-            this.imageRepository.Delete(image);
+            this.dbContext.Images.Remove(image);
 
-            await this.imageRepository.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
         }
 
         public Image GetImage(int imageId)
-            => this.imageRepository.All()
+            => this.dbContext.Images
             .Where(i => i.Id == imageId)
             .FirstOrDefault()!;
 
@@ -60,13 +62,13 @@
         }
 
         public IEnumerable<TModel> GetAllApprovedImages<TModel>()
-            => this.imageRepository.All()
+            => this.dbContext.Images
             .Where(i => i.IsApproved)
             .To<TModel>()
             .ToList();
 
         public IEnumerable<TModel> GetAllUnapprovedImages<TModel>()
-            => this.imageRepository.All()
+            => this.dbContext.Images
             .Where(i => !i.IsApproved)
             .To<TModel>()
             .ToList();

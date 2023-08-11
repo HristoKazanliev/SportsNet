@@ -1,7 +1,7 @@
 ﻿namespace SportsNet.Services.Data
 {
     using Microsoft.EntityFrameworkCore;
-
+    using SportsNet.Data;
     using SportsNet.Data.Models;
     using SportsNet.Data.Repositories.Interfaces;
     using SportsNet.Services.Data.Interfaces;
@@ -11,18 +11,17 @@
 
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository<Category> categoriesRepository;
-        private readonly IRepository<Post> postsRepository;
+        //private readonly IRepository<Category> categoriesRepository;
+        //private readonly IRepository<Post> postsRepository;
+        private readonly SportsNetDbContext dbContext;
 
-        public CategoryService(IRepository<Category> categoriesRepository, IRepository<Post> postsRepository)
+        public CategoryService(SportsNetDbContext dbContext)
         {
-            this.categoriesRepository = categoriesRepository;
-            this.postsRepository = postsRepository;
+            this.dbContext = dbContext;
         }
 
         public async Task<IEnumerable<PostSelectCategoryFormModel>> AllCategoriesAsync() 
-            => await this.categoriesRepository
-            .AllAsNoTracking()
+            => await this.dbContext.Categories
             .Select(c => new PostSelectCategoryFormModel
             {
                 Id = c.Id,
@@ -32,8 +31,7 @@
 
         public async Task<IEnumerable<string>> AllCategoryNamesAsync()
         {
-            IEnumerable<string> allNames = await this.categoriesRepository
-                .All()
+            IEnumerable<string> allNames = await this.dbContext.Categories
                 .Select(c => c.Name)
                 .ToArrayAsync();
 
@@ -49,8 +47,8 @@
                 ImageUrl = imageUrl,
             };
 
-            await this.categoriesRepository.AddAsync(newCategory);
-            await this.categoriesRepository.SaveChangesAsync();
+            await this.dbContext.Categories.AddAsync(newCategory);
+            await this.dbContext.SaveChangesAsync();
 
             return newCategory.Id;
         }
@@ -63,7 +61,7 @@
 			category.Description = description;
 			category.ImageUrl = imageUrl;
 
-			await this.categoriesRepository.SaveChangesAsync();
+			await this.dbContext.SaveChangesAsync();
 		}
 
         public async Task DeleteCategoryAsync(int categoryId)
@@ -73,13 +71,13 @@
             category.IsDeleted = true;
             category.DeletedOn = DateTime.UtcNow;
 
-            await this.categoriesRepository.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<CategoryAllViewModel>> GetCategories()
 		{
-			IEnumerable<CategoryAllViewModel> categories = await this.categoriesRepository
-                .All()
+			IEnumerable<CategoryAllViewModel> categories = await this.dbContext
+                .Categories
                 .Where(c => c.IsDeleted == false)
                 .Select(c => new CategoryAllViewModel()
                 {
@@ -87,7 +85,7 @@
                     Name = c.Name,
                     Description = c.Description,
                     ImageUrl = c.ImageUrl,
-                    PostsCount = postsRepository.All().Where(p => p.CategoryId == c.Id).Count()
+                    PostsCount = this.dbContext.Posts.Where(p => p.CategoryId == c.Id).Count()
                 })
                 .ToArrayAsync();
 
@@ -96,7 +94,7 @@
 		
 		public AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue)
 		{
-			IQueryable<Post> postQuery = this.postsRepository.All().Where(p => p.CategoryId == categoryId);
+			IQueryable<Post> postQuery = this.dbContext.Posts.Where(p => p.CategoryId == categoryId);
 
             int totalPosts = postQuery.ToList().Count;
 
@@ -115,25 +113,25 @@
 		}
 
         public T GetCategoryById<T>(int categoryId)
-            => this.categoriesRepository.All()
+            => this.dbContext.Categories
             .Where(c => c.Id == categoryId)
             .To<T>()
             .FirstOrDefault()!;
 
         public Category GetCategoryById(int categoryId)
-            => this.categoriesRepository.All()
+            => this.dbContext.Categories
             .Where(c => c.Id == categoryId)
             .FirstOrDefault()!;
 
         public bool ExistsByNameAsync(string name)
-			=> this.categoriesRepository.All().Any(c => c.Name.ToLower() == name);
+			=> this.dbContext.Categories.Any(c => c.Name.ToLower() == name);
 
 		public bool ExistsByIdAsync(int id)
-		    => this.categoriesRepository.All().Any(c => c.Id == id);
+		    => this.dbContext.Categories.Any(c => c.Id == id);
 
         public async Task<CategoryDetailsViewModel> GetDetailsForName(int id)
         {
-            Category category = await this.categoriesRepository.All().FirstAsync(c => c.Id == id);
+            Category category = await this.dbContext.Categories.FirstAsync(c => c.Id == id);
 
             CategoryDetailsViewModel model = new CategoryDetailsViewModel
             {
@@ -145,8 +143,7 @@
         }
 
 		private CategoryAllViewModel GetCategory(int categoryId)
-            => this.categoriesRepository
-            .All()
+            => this.dbContext.Categories
             .Where(c => c.Id == categoryId)
             .To<CategoryAllViewModel>()
             .FirstOrDefault()!;
