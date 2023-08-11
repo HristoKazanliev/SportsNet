@@ -20,12 +20,44 @@
 				<p class="mb-1"><strong>Modified On:</strong> @Model.ModifiedOn.Value.AddHours(3).ToString("dd/MM/yyyy HH:mm")</p>
 			}
 		</div>
+		@if (User.Identity?.IsAuthenticated ?? false)
+		{
+			<div class="row">
+				<div class="float-end">
+					<form method="post">
+						<button type="submit" asp-controller="Vote"
+								asp-action="VoteConfirmation"
+								asp-route-id="@Model.Id.ToString()"
+								class="btn btn-info">
+							Upvote
+						</button>
+					</form>
+
+					@*<form method="post">
+					<button type="submit" asp-controller="Vote"
+							asp-action="VoteAsync"
+							asp-route-postId="@Model.Id.ToString()"
+							asp-route-isUpvote="@true"
+							class="btn btn-info">
+						Upvote
+					</button>
+					<a asp-controller="Vote"
+							asp-action="VoteAsync"
+							asp-route-id="@Model.Id.ToString()"
+							asp-route-isUpvote="@false"
+							class="btn btn-danger">
+						Downvote
+					</a>
+					</form>*@
+				</div>
+			</div>
+		}
 	</div>
 	<hr />
 	<h2>@Model.Title</h2>
 	<div class="card-body">
 		<p class="fs-4">@Model.Content</p>
-		<a class="btn btn-primary disabled">@this.Model.Type</a>
+		<a class="btn btn-primary disabled">@Model.Type</a>
 		<div class="float-end">
 			@if (User.Identity?.IsAuthenticated ?? false)
 			{
@@ -40,3 +72,25 @@
 		</div>
 	</div>
 </article>
+
+@*ReferenceError: SendVote is not defined
+@section Scripts
+	{
+	<script>
+		function SendVote(postId, isUpVote) {
+			var json = { postId: postId, isUpVote: isUpVote };
+			var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+			$.ajax({
+				type: "POST",
+				dataType: "json",
+				data: JSON.stringify(json),
+				contentType: "application/json; charset=utf-8",
+				url: "/api/vote",
+				headers: { 'X-CSRF-TOKEN': token },
+				success: function (data) {
+					$("#votesCount").html(data.votesCount);
+				}
+			});
+		}
+	</script>
+}*@

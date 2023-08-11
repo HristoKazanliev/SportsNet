@@ -94,7 +94,7 @@ namespace SportsNet.Web
                     name: "RouteTemplate",
                     pattern: "/{controller}/{action}/{id}/{information}",
                     defaults: new { Controller = "Category", Action = "Details" });
-                config.MapDefaultControllerRoute();
+				config.MapDefaultControllerRoute();
 
                 config.MapRazorPages();
             });
