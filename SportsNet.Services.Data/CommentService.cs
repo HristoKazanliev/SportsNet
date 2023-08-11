@@ -23,7 +23,7 @@
                 PostId = Guid.Parse(postId),
                 AuthorId = Guid.Parse(userId),
                 Content = content,
-                CreatedOn = DateTime.UtcNow.AddHours(3),
+                CreatedOn = DateTime.UtcNow,
             };
 
             await this.commentRepository.AddAsync(comment);

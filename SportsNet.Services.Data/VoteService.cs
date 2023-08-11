@@ -20,8 +20,8 @@
 		{
 			Vote? vote = this.GetVote(postId, userId);
 			if (vote != null) 
-			{ 
-				vote.Type = VoteType.UpVote;
+			{
+				this.voteRepository.Delete(vote);
 			}
 			else
 			{
@@ -30,7 +30,7 @@
 					PostId = Guid.Parse(postId),
 					AuthorId = Guid.Parse(userId),
 					Type = VoteType.UpVote,
-					CreatedOn = DateTime.UtcNow.AddHours(3),
+					CreatedOn = DateTime.UtcNow,
 				};
 
 				await this.voteRepository.AddAsync(vote);

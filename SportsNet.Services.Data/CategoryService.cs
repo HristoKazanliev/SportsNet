@@ -71,7 +71,7 @@
             Category category = this.GetCategoryById(categoryId);
 
             category.IsDeleted = true;
-            category.DeletedOn = DateTime.UtcNow.AddHours(3);
+            category.DeletedOn = DateTime.UtcNow;
 
             await this.categoriesRepository.SaveChangesAsync();
         }

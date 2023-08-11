@@ -7,6 +7,7 @@
 	using SportsNet.Data.Models;
 
 	using static Common.NotificationMessagesConstants;
+	using static SportsNet.Common.EntityValidationConstants;
 
 	[Authorize]
 	//[Route("api/[controller]")]
@@ -32,7 +33,7 @@
 
 				//var updatedVoteCount = this.voteService.GetVotes(id);
 
-				return RedirectToAction("All", "Post");
+				return RedirectToAction("Details", "Post", new { id });
 			}
 			catch (Exception)
 			{

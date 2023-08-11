@@ -34,7 +34,7 @@
 
         public async Task ApproveImageAsync(int imageId)
         {
-            Image? image = this.GetImage(imageId);
+            Image image = this.GetImage(imageId);
             image.IsApproved = true;
             image.ModifiedOn = DateTime.Now;
 
@@ -49,10 +49,10 @@
             await this.imageRepository.SaveChangesAsync();
         }
 
-        public Image? GetImage(int imageId)
+        public Image GetImage(int imageId)
             => this.imageRepository.All()
             .Where(i => i.Id == imageId)
-            .FirstOrDefault();
+            .FirstOrDefault()!;
 
         public TModel GetImage<TModel>(int imageId)
         {

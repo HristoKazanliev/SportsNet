@@ -13,7 +13,7 @@
 
 		TModel GetImage<TModel>(int imageId);
 
-		Image? GetImage(int imageId);
+		Image GetImage(int imageId);
 
         IEnumerable<TModel> GetAllApprovedImages<TModel>();
 

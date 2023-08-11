@@ -130,7 +130,7 @@
             Post post =  await this.GetById(postId);
 
 			post.IsDeleted = true;
-			post.DeletedOn = DateTime.UtcNow.AddHours(3);
+			post.DeletedOn = DateTime.UtcNow;
 
 			await this.postRepository.SaveChangesAsync();
         }

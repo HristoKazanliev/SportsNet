@@ -29,26 +29,9 @@
 								asp-action="VoteConfirmation"
 								asp-route-id="@Model.Id.ToString()"
 								class="btn btn-info">
-							Upvote
+							Upvote👍
 						</button>
 					</form>
-
-					@*<form method="post">
-					<button type="submit" asp-controller="Vote"
-							asp-action="VoteAsync"
-							asp-route-postId="@Model.Id.ToString()"
-							asp-route-isUpvote="@true"
-							class="btn btn-info">
-						Upvote
-					</button>
-					<a asp-controller="Vote"
-							asp-action="VoteAsync"
-							asp-route-id="@Model.Id.ToString()"
-							asp-route-isUpvote="@false"
-							class="btn btn-danger">
-						Downvote
-					</a>
-					</form>*@
 				</div>
 			</div>
 		}
@@ -73,7 +56,8 @@
 	</div>
 </article>
 
-@*ReferenceError: SendVote is not defined
+@*To-Do ajax call
+ReferenceError: SendVote is not defined
 @section Scripts
 	{
 	<script>

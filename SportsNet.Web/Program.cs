@@ -82,9 +82,12 @@ namespace SportsNet.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.SeedAdministrator(AdminEmail);
+            if (app.Environment.IsDevelopment())
+            {
+				app.SeedAdministrator(AdminEmail);
+			}
 
-            app.UseEndpoints(config =>
+			app.UseEndpoints(config =>
             {
 				config.MapControllerRoute(
 			       name: "areas",
