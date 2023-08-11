@@ -60,6 +60,7 @@
 			category.Name = name;
 			category.Description = description;
 			category.ImageUrl = imageUrl;
+            category.ModifiedOn = DateTime.Now;
 
 			await this.dbContext.SaveChangesAsync();
 		}
