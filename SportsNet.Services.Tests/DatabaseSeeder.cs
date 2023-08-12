@@ -112,7 +112,7 @@
 				Type = PostType.Humour,
 				AuthorId = Guid.Parse("325389F8-4E8D-4E70-8AA3-0527F0746E54"),
 				CategoryId = 2,
-				CreatedOn = DateTime.UtcNow
+				CreatedOn = DateTime.UtcNow,
 			};
 			Vote1 = new Vote()
 			{
@@ -149,7 +149,8 @@
 			dbContext.Images.AddRange(Image1, Image2);
 			dbContext.Posts.AddRange(Post1, Post2);
 			dbContext.Votes.Add(Vote1);
-			dbContext.Comments.AddRange(Comment1, Comment2);
+			dbContext.Comments.Add(Comment1);
+			dbContext.Comments.Add(Comment2);
 			
 		}
 	}

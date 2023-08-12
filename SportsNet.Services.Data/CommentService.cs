@@ -27,7 +27,7 @@
                 CreatedOn = DateTime.UtcNow,
             };
 
-            await this.dbContext.AddAsync(comment);
+            await this.dbContext.Comments.AddAsync(comment);
             await this.dbContext.SaveChangesAsync();
         }
 

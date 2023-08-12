@@ -36,6 +36,7 @@
 
             post = new Post()
             {
+                Id = Guid.Parse("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0"),
                 Title = "Kylian Mbappe: PSG grant forward permission to speak to Al Hilal",
                 Content = "Paris Saint-Germain have granted permission for Kylian Mbappe to speak to Al Hilal after the Saudi club's world-record £259m bid.",
                 Type = Models.Enums.PostType.Media,
@@ -46,6 +47,7 @@
 
             post = new Post()
             {
+                Id = Guid.Parse("63066625-0922-42F3-8798-F132295079E3"),
                 Title = "Lando breaks Max's trophy!",
                 Content = "The impact of Norris' traditional celebration of smashing the champagne bottle on the ground to spray the champagne accidentally saw Verstappen's trophy fall over and break.",
                 Type = Models.Enums.PostType.Humour,
@@ -56,6 +58,7 @@
 
             post = new Post()
             {
+                Id = Guid.Parse("A3BEFD9B-17F7-4770-8B57-CDB89441B3E0"),
                 Title = "Wimbledon men's final: Carlos Alcaraz defeats seven-time champion Novak Djokovic",
                 Content = "World No 1 Carlos Alcaraz ended Novak Djokovic's hopes of a record-equalling 24th Grand Slam to claim his maiden Wimbledon title in a five-set epic, 1-6 7-6 (8-6) 6-1 3-6 6-4.",
                 Type = Models.Enums.PostType.Media,
