@@ -69,9 +69,7 @@
         {
             Category category = this.GetCategoryById(categoryId);
 
-            category.IsDeleted = true;
-            category.DeletedOn = DateTime.UtcNow;
-
+            this.dbContext.Categories.Remove(category);
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -79,14 +77,14 @@
 		{
 			IEnumerable<CategoryAllViewModel> categories = await this.dbContext
                 .Categories
-                .Where(c => c.IsDeleted == false)
+                .Where(c => !c.IsDeleted)
                 .Select(c => new CategoryAllViewModel()
                 {
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
                     ImageUrl = c.ImageUrl,
-                    PostsCount = this.dbContext.Posts.Where(p => p.CategoryId == c.Id).Count()
+                    PostsCount = this.dbContext.Posts.Where(p => p.CategoryId == c.Id && !p.IsDeleted).Count()
                 })
                 .ToArrayAsync();
 
@@ -95,7 +93,8 @@
 		
 		public AllCategoriesQueryModel GetDetailsByIdAsync(int categoryId, int currentPage = 1, int postsPerPage = int.MaxValue)
 		{
-			IQueryable<Post> postQuery = this.dbContext.Posts.Where(p => p.CategoryId == categoryId);
+			IQueryable<Post> postQuery = this.dbContext.Posts.Where(p => p.CategoryId == categoryId 
+                                                                      && !p.IsDeleted);
 
             int totalPosts = postQuery.ToList().Count;
 
@@ -151,6 +150,7 @@
 
 		private IEnumerable<PostAllViewModel> GetPosts(IQueryable<Post> postQuery)
 		  => postQuery
+              .Where(p => !p.IsDeleted)
 			  .To<PostAllViewModel>()
 			  .ToList();       
     }

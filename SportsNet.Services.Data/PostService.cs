@@ -24,7 +24,9 @@
 
 		public async Task<AllPostsQueryServiceModel> AllAsync(AllPostsQueryModel queryModel)
 		{
-			IQueryable<Post> postsQuery = this.dbContext.Posts.AsQueryable();
+			IQueryable<Post> postsQuery = this.dbContext.Posts
+				.Where(p => !p.IsDeleted)
+				.AsQueryable();
 
 			if (!string.IsNullOrWhiteSpace(queryModel.Category))
 			{

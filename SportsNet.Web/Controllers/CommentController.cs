@@ -33,6 +33,11 @@
                 return this.RedirectToAction("Details", "Post", new { id = comment.PostId });
             }
 
+            if (!this.ModelState.IsValid)
+            {
+                return View(comment);
+            }
+
             await this.commentService.CreateCommentAsync(comment.PostId, user.Id.ToString(), comment.Content);
 
             return this.RedirectToAction("Details", "Post", new { id = comment.PostId });
