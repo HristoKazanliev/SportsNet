@@ -76,7 +76,7 @@
                 string postId = await this.postService.CreateAsync(model, this.User.GetId()!);
 
                 TempData[SuccessMessage] = "Post was added successfully!";
-                return RedirectToAction("Details", "Post", new { postId });
+                return RedirectToAction("Details", "Post", new { id = postId });
             }
             catch (Exception)
             {

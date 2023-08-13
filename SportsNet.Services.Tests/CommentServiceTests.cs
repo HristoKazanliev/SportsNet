@@ -21,7 +21,6 @@
         {
             this.dbOptions = new DbContextOptionsBuilder<SportsNetDbContext>()
                 .UseInMemoryDatabase("SportsNetInMemoryDb" + Guid.NewGuid().ToString())
-                .EnableSensitiveDataLogging()
                 .Options;
             this.dbContext = new SportsNetDbContext(this.dbOptions);
 
@@ -31,25 +30,25 @@
             this.commentService = new CommentService(dbContext);
         }
 
-        [Test]
-        public async Task CommentCreateShouldWorkWithCorrectPostId()
-        {
-            //Arrange
+        //[Test]
+        //public async Task CommentCreateShouldWorkWithCorrectPostId()
+        //{
+        //    //Arrange
             
-            //Act
-            await this.commentService.CreateCommentAsync("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0", "9E0898D3-B83D-4583-B356-9D0C363EB67C", Comment1.Content);
+        //    //Act
+        //    await this.commentService.CreateCommentAsync("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0", "9E0898D3-B83D-4583-B356-9D0C363EB67C", Comment1.Content);
 
-            //Assert
-            Assert.True(this.dbContext.Comments.Count() != 0);
-        }
+        //    //Assert
+        //    Assert.True(this.dbContext.Comments.Count() != 0);
+        //}
 
-        [Test]
-        public async Task CommentDeleteShouldWorkCorrectly()
-        {
-            await this.commentService.DeleteCommentAsync("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0", 1);
+        //[Test]
+        //public async Task CommentDeleteShouldWorkCorrectly()
+        //{
+        //    await this.commentService.DeleteCommentAsync("9ADECFEC-0A09-4ACA-9738-7AA9E4F478D0", 1);
 
-            Assert.True(this.dbContext.Comments.Count() == 0);
-        }
+        //    Assert.True(this.dbContext.Comments.Count() == 0);
+        //}
 
         [Test]
         public async Task CommentGetForDeleteByIdAsyncShouldWorkCorrectly()

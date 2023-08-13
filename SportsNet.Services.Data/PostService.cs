@@ -48,7 +48,7 @@
 					.OrderByDescending(p => p.CreatedOn),
 				PostSorting.Oldest => postsQuery
 					.OrderBy(p => p.CreatedOn),
-				_ => postsQuery.OrderBy(p => p.Comments.Count)
+				_ => postsQuery.OrderBy(p => p.CreatedOn)
 			};
 
 			IEnumerable<PostAllViewModel> allPosts = await postsQuery
@@ -81,6 +81,7 @@
 
 			Post post = new Post()
 			{
+				Id = Guid.NewGuid(),
 				Title = formModel.Title,
 				Content = formModel.Content,
 				CategoryId = formModel.CategoryId,

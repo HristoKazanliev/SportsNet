@@ -27,7 +27,7 @@
 				Description = viewModel.Description,
 				ImageUrl = viewModel.ImageUrl,
 				AuthorId = Guid.Parse(viewModel.AuthorId!),
-				CreatedOn = DateTime.Now.AddHours(3)
+				CreatedOn = DateTime.UtcNow
 			};
 
 			await this.dbContext.Images.AddAsync(image);
@@ -38,7 +38,7 @@
         {
             Image image = this.GetImage(imageId);
             image.IsApproved = true;
-            image.ModifiedOn = DateTime.Now;
+            image.ModifiedOn = DateTime.UtcNow;
 
             await this.dbContext.SaveChangesAsync();
         }
